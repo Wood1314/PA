@@ -37,11 +37,13 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char *args){
+  /* get args_str to uint64*/
+
   char *n_str = strtok(args," ");
-  printf("%s", n_str);
   uint64_t n;
   n = atoll(n_str);
-  cpu_exec(n);
+
+  cpu_exec(n); //execute
   return 0;
 }
 
