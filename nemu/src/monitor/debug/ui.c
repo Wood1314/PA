@@ -38,12 +38,15 @@ static int cmd_q(char *args) {
 
 static int cmd_si(char *args){
   /* get args_str to uint64*/
-
-  char *n_str = strtok(args," ");
-  uint64_t n;
-  n = atoll(n_str);
-
-  cpu_exec(n); //execute
+  
+  if(args == NULL){
+      cpu_exec(1);     
+  }
+  else{
+      char *n_str = strtok(args, " ");
+      uint64_t n = atoll(n_str);
+      cpu_exec(n);
+  }
   return 0;
 }
 
