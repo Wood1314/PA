@@ -52,6 +52,24 @@ static int cmd_si(char *args){
   return 0;
 }
 
+static int cmd_info(char *args){
+    if(args == NULL) {return 0;}
+    else{
+        //split string
+        char *n_str = strtok(args, " ");
+        if(!strcmp(n_str,"r")){
+            //print all regeister
+            for(int i=0; i<8; i++){
+                printf("%s:\t%8x\t", regsl[i], cpu.gpr[i]._32);
+            }
+        }
+        else if(!strcmp(n_str,"w")){
+            printf("hahai\n");
+        }
+    }
+    return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -62,9 +80,10 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "Execute the step by one", cmd_si}
+  { "si", "Execute the step by one", cmd_si},
 
   /* TODO: Add more commands */
+  { "info", "Show all the regester' information", cmd_info }
 
 };
 
