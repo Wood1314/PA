@@ -47,6 +47,7 @@ static int cmd_si(char *args){
       uint64_t n = atoll(n_str);
       while(n--){
           cpu_exec(1);
+          if(nemu_state != NEMU_RUNNING) {return -1; }
       }
   }
   return 0;
