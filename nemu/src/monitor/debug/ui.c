@@ -39,6 +39,9 @@ static int cmd_q(char *args) {
 static int cmd_si(char *args){
   char *n_str = strtok(args," ");
   printf("%s", n_str);
+  uint64_t n;
+  n = atoll(n_str);
+  cpu_exec(n);
   return 0;
 }
 
