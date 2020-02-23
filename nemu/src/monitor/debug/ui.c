@@ -45,7 +45,9 @@ static int cmd_si(char *args){
   else{
       char *n_str = strtok(args, " ");
       uint64_t n = atoll(n_str);
-      cpu_exec(n);
+      while(n--){
+          cpu_exec(1);
+      }
   }
   return 0;
 }
