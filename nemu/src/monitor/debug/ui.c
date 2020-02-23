@@ -61,6 +61,7 @@ static int cmd_info(char *args){
             //print all regeister
             for(int i=0; i<8; i++){
                 printf("%s:\t%8x\t", regsl[i], cpu.gpr[i]._32);
+                printf("\n");
             }
         }
         else if(!strcmp(n_str,"w")){
