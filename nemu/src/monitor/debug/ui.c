@@ -71,11 +71,11 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
     else{
-        printf("%-10s  %-10s  %-10s\n","Address","DwordBlock","DwordBlock");
+        printf("%-10s\t%-10s\t%-10s\n","Address","DwordBlock","DwordBlock");
         char *n_str = strtok(args, " ");
         if(!memcmp(n_str,"0x",2)){
            long addr = strtol(n_str,NULL,16);
-           printf("%#010x  ",(uint32_t)addr);
+           printf("%#010x\t",(uint32_t)addr);
            printf("%#010x\n",vaddr_read(addr,4)); 
         }
         else{
@@ -83,9 +83,9 @@ static int cmd_x(char *args){
             n_str = strtok(NULL, " ");
             long addr = strtol(n_str,NULL, 16);
             while(n){
-                printf("%#010x ",(uint32_t)addr);
+                printf("%#010x\t",(uint32_t)addr);
                 for(int i=1; i<=2; i++){
-                    printf("%#010x  ",vaddr_read(addr,4));
+                    printf("%#010x\t",vaddr_read(addr,4));
                     addr += 4;
                     n--;
                     if(n == 0) break;
