@@ -71,7 +71,7 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
     else{
-        printf("%-10s%-10s  %-10s\n","Address","DwordBlock","DwordBlock");
+        printf("%-10s  %-10s  %-10s\n","Address","DwordBlock","DwordBlock");
         char *n_str = strtok(args, " ");
         if(!memcmp(n_str,"0x",2)){
            long addr = strtol(n_str,NULL,16);
