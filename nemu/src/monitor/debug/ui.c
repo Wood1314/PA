@@ -75,6 +75,7 @@ static int cmd_x(char *args){
     else{
         printf("%-10s%-10s  %-10s\n","Address","DwordBlock","DwordBlock");
         char *n_str = strtok(args, " ");
+        printf("%s\n",n_str);
         if(!memcpy(n_str,"0x",2)){
            long addr = strtol(n_str,NULL,16);
            printf("%#x",vaddr_read(addr,4)); 
