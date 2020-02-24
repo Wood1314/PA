@@ -71,6 +71,17 @@ static int cmd_info(char *args){
     return 0;
 }
 
+static int cmd_x(char *args){
+    if(args == NULL){printf("Please input argument\n"); return 0;}
+    else{
+        char *n_str = strtok(args, " ");
+        printf("%s\n",n_str);
+        n_str = strtok(NULL," ");
+        printf("%s\n",n_str);
+    }
+    return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -84,8 +95,8 @@ static struct {
   { "si", "Execute the step by one", cmd_si},
 
   /* TODO: Add more commands */
-  { "info", "Show all the regester' information", cmd_info }
-
+  { "info", "Show all the regester' information", cmd_info },
+  { "x", "Show the memory things", cmd_x }
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
