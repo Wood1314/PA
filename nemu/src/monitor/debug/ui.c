@@ -1,5 +1,3 @@
-#include "monitor/monitor.h"
-#include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
 #include <stdlib.h>
@@ -77,10 +75,23 @@ static int cmd_x(char *args){
         char *n_str = strtok(args, " ");
         if(!memcmp(n_str,"0x",2)){
            long addr = strtol(n_str,NULL,16);
-           printf("%#x  ",(uint32_t)addr);
-           printf("%#x\n",vaddr_read(addr,4)); 
+           printf("%#08x  ",(uint32_t)addr);
+           printf("%#08x\n",vaddr_read(addr,4)); 
         }
-        else printf("hello world\n");
+        else{
+            int n = atoi(n_str);
+            n_str = strtok(NULL, " ");
+            long addr = strtol(n_str,NULL, 16);
+            while(n){
+                printf("%#08x ",(uint32_t)addr);
+                for(int i=1; i<=2; i++){
+                    printf("%#08x  ",vaddr_read(addr++,4));
+                    n--;
+                    if(n == 0) break;
+                }
+                printf("\n");
+            }
+        }
     }
     return 0;
 }
