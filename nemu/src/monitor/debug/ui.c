@@ -57,7 +57,7 @@ static int cmd_info(char *args){
         if(!strcmp(n_str,"r")){
             //print all regeister
             for(int i=0; i<8; i++){
-                printf("%s:\t%#8x\t", regsl[i], cpu.gpr[i]._32);
+                printf("%s:\t%#010x\t", regsl[i], cpu.gpr[i]._32);
                 printf("\n");
             }
         }
@@ -75,17 +75,18 @@ static int cmd_x(char *args){
         char *n_str = strtok(args, " ");
         if(!memcmp(n_str,"0x",2)){
            long addr = strtol(n_str,NULL,16);
-           printf("%#08x  ",(uint32_t)addr);
-           printf("%#08x\n",vaddr_read(addr,4)); 
+           printf("%#010x  ",(uint32_t)addr);
+           printf("%#010x\n",vaddr_read(addr,4)); 
         }
         else{
             int n = atoi(n_str);
             n_str = strtok(NULL, " ");
             long addr = strtol(n_str,NULL, 16);
             while(n){
-                printf("%#08x ",(uint32_t)addr);
+                printf("%#010x ",(uint32_t)addr);
                 for(int i=1; i<=2; i++){
-                    printf("%#08x  ",vaddr_read(addr++,4));
+                    printf("%#010x  ",vaddr_read(addr,4));
+                    addr += 4;
                     n--;
                     if(n == 0) break;
                 }
