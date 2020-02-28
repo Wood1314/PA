@@ -97,12 +97,12 @@ static int cmd_x(char *args){
     return 0;
 }
 
-extern bool make_token(char *e); 
 
 static int cmd_p(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
     else{
         char *expr = strtok(args," ");
+        extern bool make_token(char *e);
         make_token(expr);
     }
     return 0;
