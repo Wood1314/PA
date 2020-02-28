@@ -128,10 +128,10 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
- // if( check_parenthese(0,nr_token) )
- //   printf("true\n");
- // else
-  //    printf("false\n");
+  if( check_parentheses(0,nr_token) )
+    printf("true\n");
+  else
+      printf("false\n");
   return 0;
 }
 
