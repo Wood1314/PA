@@ -102,9 +102,8 @@ extern uint32_t expr(char *e, bool *success);
 static int cmd_p(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
     else{
-        char *e = strtok(args," ");
         bool success = true;
-        expr(e,&success);
+        expr(args,&success);
     }
     return 0;
 
