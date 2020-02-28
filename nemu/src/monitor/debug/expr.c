@@ -137,14 +137,18 @@ uint32_t expr(char *e, bool *success) {
 
 bool check_parentheses(int p, int q){
     int number = 0;
-    for(int i=p; i<q; i++){
-        if(tokens[i].type == '(')
-            number++;
-        else if(tokens[i].type == ')')
-            number--;
-        if(number < 0)
-            return false;
+    if(tokens[p].type == '(' && tokens[q].type == ')'){
+        for(int i=p+1; i<q-1; i++){
+             if(tokens[i].type == '(')
+                number++;
+             else if(tokens[i].type == ')')
+                 number--;
+             if(number < 0)
+                 return false;
+         }
     }
+    else
+        return false;
     if(number == 0)
         return true;
     else
