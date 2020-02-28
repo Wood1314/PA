@@ -119,6 +119,40 @@ static bool make_token(char *e) {
 bool check_parentheses(int p,int q);
 uint32_t eval(int p, int q);
 
+int find_priovrity(char op){
+    switch(op){
+     case '+':
+         return 1;
+     case '-':
+         return 1;
+     case '*':
+         return 2;
+     case '/':
+         return 2;
+     default:
+         return 101;
+       
+    }
+}
+
+int find_dominated_op(int p, int q){
+    int min = 100;
+    int min_id = -1;
+    int num = 0;
+    int prio = 100;
+    for(int i=p; i<q; i++){
+        if(tokens[i].type == '(')
+            num++;
+        else if(tokens[i].type == ')')
+            num--;
+        prio = find_priovrity(tokens[i].type) + num*3;
+        if(prio <= min){
+            min = prio;
+            min_id = i; 
+        }
+    }
+    return min_id;
+}
 
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -128,10 +162,12 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-  if( check_parentheses(0,nr_token) )
-    printf("true\n");
+  int pos = find_dominated_op(0,nr_token);
+  if(pos != -1){
+      printf("dominated_op is %d %c",pos,tokens[pos].type);
+  }
   else
-      printf("false\n");
+      printf("Error\n");
   return 0;
 }
 
