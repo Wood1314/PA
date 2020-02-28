@@ -98,6 +98,8 @@ static bool make_token(char *e) {
                         tokens[nr_token].str[i] = substr_start[i];
                     nr_token++;
                 }
+            case TK_NOTYPE:
+                break;
             default: tokens[nr_token++].type = rules[i].token_type;
         }
 
