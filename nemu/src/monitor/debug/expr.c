@@ -87,7 +87,18 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          default: printf("Have no oprate\n");
+            case NUM:
+                if(substr_len > 32){
+                    printf("Too long!\n");
+                    break;
+                }
+                else{
+                    tokens[nr_token].type = NUM;
+                    for(int i=0; i<substr_len; i++)
+                        tokens[nr_token].str[i] = substr_start[i];
+                    nr_token++;
+                }
+            default: tokens[nr_token++].type = rules[i].token_type;
         }
 
         break;
