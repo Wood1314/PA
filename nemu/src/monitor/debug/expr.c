@@ -106,7 +106,6 @@ static bool make_token(char *e) {
         break;
       }
     }
-    printf("The number of token is %d",nr_token);
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
@@ -117,6 +116,10 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int p,int q);
+uint32_t eval(int p, int q);
+
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -125,6 +128,50 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-
+ // if( check_parenthese(0,nr_token) )
+ //   printf("true\n");
+ // else
+  //    printf("false\n");
   return 0;
+}
+
+bool check_parentheses(int p, int q){
+    int number = 0;
+    for(int i=p; i<q; i++){
+        if(tokens[i].type == '(')
+            number++;
+        else if(tokens[i].type == ')')
+            number--;
+        if(number < 0)
+            return false;
+    }
+    if(number == 0)
+        return true;
+    else
+        return false;
+}
+
+uint32_t eval(int p, int q){
+    if(p > q){
+        /*Bad expression */
+        printf("Bad expression\n");
+        return 0;
+    }
+    else if(p == q){
+        /*Singel token.
+         * for now this token should be a number
+         * Return the value of the number
+         */
+        return 0;
+    }
+    else if(check_parentheses(p,q) == true){
+        /* The expression is surrounded by a matched pair of parentheses.
+        * If that is the case, just throw away the parentheses.
+        */
+        return eval(p + 1, q - 1);
+    }
+    else{
+        /*We shoule do more things here. */
+        return 0;
+    }
 }
