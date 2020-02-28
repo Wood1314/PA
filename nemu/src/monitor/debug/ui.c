@@ -97,13 +97,14 @@ static int cmd_x(char *args){
     return 0;
 }
 
+extern uint32_t expr(char *e, bool *success);
 
 static int cmd_p(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
     else{
-        char *expr = strtok(args," ");
-        extern bool make_token(char *e);
-        make_token(expr);
+        char *e = strtok(args," ");
+        bool success = true;
+        expr(e,&success);
     }
     return 0;
 
