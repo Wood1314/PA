@@ -161,8 +161,6 @@ uint32_t expr(char *e, bool *success) {
   }
   else{
       *success = true;
-      int id = find_dominated_op(0,nr_token-1);                                                                                                                      
-      printf("id is %d %c",id, tokens[id].type); 
       return eval(0,nr_token-1);
   }
 
