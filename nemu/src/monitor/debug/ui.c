@@ -102,8 +102,15 @@ extern uint32_t expr(char *e, bool *success);
 static int cmd_p(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
     else{
-        bool success = true;
-        expr(args,&success);
+        bool success = false;
+        uint32_t result = expr(args, &success);
+        if(!success){
+            printf("Wrong express!\n");
+            return 0;
+        }
+        else{
+            printf("%x",result);
+        }
     }
     return 0;
 

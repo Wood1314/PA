@@ -1,4 +1,5 @@
 #include "nemu.h"
+#include <stdlib.h>
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -88,9 +89,9 @@ static bool make_token(char *e) {
 
         switch (rules[i].token_type) {
             case NUM:
-                if(substr_len > 32){
+                if(substr_len >= 32){
                     printf("Too long!\n");
-                    break;
+                    return false;
                 }
                 else{
                     tokens[nr_token].type = NUM;
@@ -159,16 +160,11 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
-  /* TODO: Insert codes to evaluate the expression. */
-  //TODO();
-  int pos = find_dominated_op(0,nr_token);
-  if(pos != -1){
-      printf("dominated_op is %d %c",pos,tokens[pos].type);
+  else{
+      *success = true;
+      return eval(0,nr_token);
   }
-  else
-      printf("Error\n");
-  return 0;
+
 }
 
 bool check_parentheses(int p, int q){
@@ -202,7 +198,9 @@ uint32_t eval(int p, int q){
          * for now this token should be a number
          * Return the value of the number
          */
-        return 0;
+        char *endptr;
+        long number = strtol(tokens[p].str,&endptr,0);
+        return (uint32_t)number;
     }
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
