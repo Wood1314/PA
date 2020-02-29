@@ -1,5 +1,4 @@
 #include "nemu.h"
-#include <stdlib.h>
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -200,7 +199,7 @@ uint32_t eval(int p, int q){
          */
         char *endptr;
         long number = strtol(tokens[p].str,&endptr,0);
-        return (uint32_t)number;
+        return 20+number;
     }
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
