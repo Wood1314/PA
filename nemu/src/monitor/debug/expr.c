@@ -140,7 +140,7 @@ int find_dominated_op(int p, int q){
     int min_id = -1;
     int num = 0;
     int prio = 100;
-    for(int i=p; i<q; i++){
+    for(int i=p; i<=q; i++){
         if(tokens[i].type == '(')
             num++;
         else if(tokens[i].type == ')')
@@ -161,15 +161,15 @@ uint32_t expr(char *e, bool *success) {
   }
   else{
       *success = true;
-      return eval(0,nr_token);
+      return eval(0,nr_token-1);
   }
 
 }
 
 bool check_parentheses(int p, int q){
     int number = 0;
-    if(tokens[p].type == '(' && tokens[q-1].type == ')'){
-        for(int i=p+1; i<q-1; i++){
+    if(tokens[p].type == '(' && tokens[q].type == ')'){
+        for(int i=p+1; i<q; i++){
              if(tokens[i].type == '(')
                 number++;
              else if(tokens[i].type == ')')
