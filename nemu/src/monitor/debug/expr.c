@@ -174,8 +174,11 @@ bool check_parentheses(int p, int q){
                 number++;
              else if(tokens[i].type == ')')
                  number--;
-             if(number < 0)
+             if(number < 0){
+                 printf("Can not have right ( and ) numbers\n");
+                 assert(0);
                  return false;
+             }
          }
     }
     else
