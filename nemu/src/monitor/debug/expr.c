@@ -210,6 +210,8 @@ uint32_t eval(int p, int q){
     else{
         /*We shoule do more things here. */
         int op = find_dominated_op(p,q);
+        if(op == -1)
+            printf("Wrong op position\n");
         int val1 = eval(p,op - 1);
         int val2 = eval(op+1, q);
         switch (tokens[op].type) {
