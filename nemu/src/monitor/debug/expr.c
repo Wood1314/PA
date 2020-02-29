@@ -162,6 +162,8 @@ uint32_t expr(char *e, bool *success) {
   else{
       *success = true;
       return eval(0,nr_token-1);
+      int id = find_dominated_op(0,nr_token-1);
+      printf("id is %d %c",id, tokens[id].type);
   }
 
 }
@@ -199,7 +201,7 @@ uint32_t eval(int p, int q){
          */
         char *endptr;
         long number = strtol(tokens[p].str,&endptr,0);
-        return 20+number;
+        return number;
     }
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.

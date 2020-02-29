@@ -109,7 +109,7 @@ static int cmd_p(char *args){
             return 0;
         }
         else{
-            printf("%x",result);
+            printf("%#x",result);
         }
     }
     return 0;
