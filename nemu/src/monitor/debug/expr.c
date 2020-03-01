@@ -10,7 +10,7 @@ enum {
   TK_NOTYPE = 256, TK_EQ, TK_NQ,
 
   /* TODO: Add more token types */
-  NUM, REG, NEG, TK_AND, TK_OR,NOT 
+  NUM, REG, NEG, TK_AND, TK_OR,NOT, DEREF 
 };
 
 static struct rule {
@@ -181,6 +181,15 @@ uint32_t expr(char *e, bool *success) {
                 tokens[i].type = NEG;
           }
       }
+      for(int i=0; i<nr_token; i++){
+             if(tokens[i].type == '*' && ( i==0 || tokens[i-1].type == '+'\
+                         || tokens[i-1].type == '-' || tokens[i-1].type == '*'\
+                         || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_NQ \
+                         || tokens[i-1].type == TK_AND || tokens[i-1].type == TK_OR\
+                         || tokens[i-1].type == NOT)){
+                tokens[i].type = DEREF;
+             }
+     }
       *success = true;
       return eval(0,nr_token-1);
   }
@@ -234,6 +243,11 @@ uint32_t eval(int p, int q){
         char *endptr;
         long number = strtol(tokens[q].str,&endptr,0);
         return !number;
+    }
+    else if((p+1 == q) && tokens[p].type == DEREF){
+        char *endptr;
+        long number = strtol(tokens[q].str, &endptr, 0);
+        return vaddr_read(number, 4);
     }
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
