@@ -7,10 +7,10 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, TK_EQ, TK_NQ,
 
   /* TODO: Add more token types */
-  NUM, REG, NEG 
+  NUM, REG, NEG, TK_AND, TK_OR,NOT 
 };
 
 static struct rule {
@@ -31,7 +31,11 @@ static struct rule {
   {"0x[0-9A-Fa-f]+|[0-9]+",NUM}, //number
   {"\\$eax|\\$ebx|\\$ecx|\\$ebx|\\$ebp|\\$esp|\\$esi|\\$edi",REG},  //regeisters
   {"\\(",'('},          //left kuo
-  {"\\)",')'}           //right kuo
+  {"\\)",')'},           //right kuo
+  {"&&", TK_AND},       
+  {"||", TK_OR},
+  {"!=", TK_NQ},
+  {"!",'!'}
 }; 
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -119,7 +123,7 @@ static bool make_token(char *e) {
 bool check_parentheses(int p,int q);
 uint32_t eval(int p, int q);
 
-int find_priovrity(char op){
+int find_priovrity(int op){
     switch(op){
      case '+':
          return 1;
@@ -129,6 +133,14 @@ int find_priovrity(char op){
          return 2;
      case '/':
          return 2;
+     case TK_EQ:
+         return 0;
+     case TK_NQ:
+         return 0;
+     case TK_OR:
+         return 0;
+     case TK_AND:
+         return 0;
      default:
          return 101;
        
@@ -162,7 +174,10 @@ uint32_t expr(char *e, bool *success) {
   else{
       for(int i=0; i<nr_token; i++){
           if(tokens[i].type == '-' && ( i==0 || tokens[i-1].type == '+'\
-                      || tokens[i-1].type == '-' || tokens[i-1].type == '*')){
+                      || tokens[i-1].type == '-' || tokens[i-1].type == '*'\
+                      || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_NQ \
+                      || tokens[i-1].type == TK_AND || tokens[i-1].type == TK_OR\
+                      || tokens[i-1].type == NOT)){
                 tokens[i].type = NEG;
           }
       }
@@ -215,6 +230,11 @@ uint32_t eval(int p, int q){
         long number = strtol(tokens[q].str,&endptr,0);
         return -number;
     }
+    else if((p+1 == q) && tokens[p].type == NOT ){
+        char *endptr;
+        long number = strtol(tokens[q].str,&endptr,0);
+        return !number;
+    }
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
         * If that is the case, just throw away the parentheses.
@@ -233,6 +253,10 @@ uint32_t eval(int p, int q){
             case '-': return val1 - val2;
             case '*': return val1 * val2;
             case '/': return val1 / val2;
+            case TK_EQ: return val1 == val2;
+            case TK_NQ: return val1 != val2;
+            case TK_OR: return val1 || val2;
+            case TK_AND: return val1 && val2;
             default: assert(0);
         }
     }
