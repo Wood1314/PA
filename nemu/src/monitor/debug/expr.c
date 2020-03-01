@@ -35,7 +35,6 @@ static struct rule {
   {"&&", TK_AND},       
   {"\\|\\|", TK_OR},
   {"!=", TK_NQ},
-  {"!",'!'}
 }; 
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -179,6 +178,9 @@ uint32_t expr(char *e, bool *success) {
                       || tokens[i-1].type == TK_AND || tokens[i-1].type == TK_OR\
                       || tokens[i-1].type == NOT)){
                 tokens[i].type = NEG;
+          }
+          if(tokens[i].type == '!' && tokens[i+1].type == NUM){
+                   tokens[i].type = NOT;
           }
       }
       *success = true;
