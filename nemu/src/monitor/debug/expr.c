@@ -33,7 +33,7 @@ static struct rule {
   {"\\(",'('},          //left kuo
   {"\\)",')'},           //right kuo
   {"&&", TK_AND},       
-  {"||", TK_OR},
+  {"\\|\\|", TK_OR},
   {"!=", TK_NQ},
   {"!",'!'}
 }; 
