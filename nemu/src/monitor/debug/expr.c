@@ -253,7 +253,7 @@ bool check_parentheses(int p, int q){
 uint32_t eval(int p, int q){
     if(p > q){
         /*Bad expression */
-        printf("Bad expression\n");
+       // printf("Bad expression\n");
         return 0;
     }
     else if(p == q){
@@ -265,6 +265,7 @@ uint32_t eval(int p, int q){
         long number = strtol(tokens[p].str,&endptr,0);
         return number;
     }
+    /*
     // begin at right,and calculate
     else if((tokens[q-1].type == NEG || tokens[q-1].type == NOT || tokens[q-1].type == DEREF ) && tokens[q].type == NUM){
         char *endptr;
@@ -282,6 +283,7 @@ uint32_t eval(int p, int q){
         }
         return number;
     }
+    */
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
         * If that is the case, just throw away the parentheses.
@@ -304,6 +306,7 @@ uint32_t eval(int p, int q){
             case TK_NQ: return val1 != val2;
             case TK_OR: return val1 || val2;
             case TK_AND: return val1 && val2;
+            case NEG: return val1 - val2;
             default: assert(0);
         }
     }
