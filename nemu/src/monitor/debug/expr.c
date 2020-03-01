@@ -312,7 +312,7 @@ uint32_t eval(int p, int q){
             case TK_NQ: return val1 != val2;
             case TK_OR: return val1 || val2;
             case TK_AND: return val1 && val2;
-            case NEG: printf("%d",-val2); return -val2;
+            case NEG: printf("%d\n",-val2); return -val2;
             case NOT: return !val2;
             case DEREF: return vaddr_read(val2,4);
             default: assert(0);
