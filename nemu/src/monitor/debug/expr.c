@@ -10,7 +10,7 @@ enum {
   TK_NOTYPE = 256, TK_EQ,
 
   /* TODO: Add more token types */
-  NUM,REG
+  NUM, REG, NEG 
 };
 
 static struct rule {
@@ -160,6 +160,12 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
   else{
+      for(int i=0; i<nr_token; i++){
+          if(tokens[i].type == '-' && ( i==0 || tokens[i-1].type == '+'\
+                      || tokens[i-1].type == '-' || tokens[i-1].type == '*')){
+                tokens[i].type = NEG;
+          }
+      }
       *success = true;
       return eval(0,nr_token-1);
   }
@@ -195,7 +201,7 @@ uint32_t eval(int p, int q){
         printf("Bad expression\n");
         return 0;
     }
-    else if(p == q){
+    else if(p == q || (tokens[p].type == NEG &&(p+1 == q) )){
         /*Singel token.
          * for now this token should be a number
          * Return the value of the number
