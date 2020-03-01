@@ -111,6 +111,7 @@ static bool make_token(char *e) {
                 if(!strncmp(substr_start,"$eax",substr_len))
                     sprintf(tokens[nr_token].str,"%d",cpu.eax);
                 nr_token++;
+                break;
                 
             default: tokens[nr_token++].type = rules[i].token_type;
         }
