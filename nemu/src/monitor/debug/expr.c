@@ -110,6 +110,30 @@ static bool make_token(char *e) {
                 tokens[nr_token].type = REG;
                 if(!strncmp(substr_start,"$eax",substr_len))
                     sprintf(tokens[nr_token].str,"%d",cpu.eax);
+
+                if(!strncmp(substr_start,"$edx",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.edx);
+
+                if(!strncmp(substr_start,"$ecx",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.ecx);
+
+                if(!strncmp(substr_start,"$ebx",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.ebx);
+
+                if(!strncmp(substr_start,"$ebp",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.ebp);
+
+                if(!strncmp(substr_start,"$esi",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.esi);
+
+                if(!strncmp(substr_start,"$edi",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.edi);
+
+                if(!strncmp(substr_start,"$esp",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.esp);
+
+                if(!strncmp(substr_start,"$eip",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.eip);
                 nr_token++;
                 break;
                 
