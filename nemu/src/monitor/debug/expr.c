@@ -100,10 +100,18 @@ static bool make_token(char *e) {
                     tokens[nr_token].type = NUM;
                     for(int i=0; i<substr_len; i++)
                         tokens[nr_token].str[i] = substr_start[i];
+                    tokens[nr_token].str[substr_len] = '\0';
                     nr_token++;
                 }
+                break;
             case TK_NOTYPE:
                 break;
+            case REG:
+                tokens[nr_token].type = REG;
+                if(!strncmp(substr_start,"$eax",substr_len))
+                    sprintf(tokens[nr_token].str,"%d",cpu.eax);
+                nr_token++;
+                
             default: tokens[nr_token++].type = rules[i].token_type;
         }
 
