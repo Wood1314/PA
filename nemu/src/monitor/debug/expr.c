@@ -232,23 +232,7 @@ uint32_t eval(int p, int q){
         long number = strtol(tokens[p].str,&endptr,0);
         return number;
     }
-    /*
-    else if((p+1 == q)&& tokens[p].type == NEG){
-        char *endptr;
-        long number = strtol(tokens[q].str,&endptr,0);
-        return -number;
-    }
-    else if((p+1 == q) && tokens[p].type == NOT ){
-        char *endptr;
-        long number = strtol(tokens[q].str,&endptr,0);
-        return !number;
-    }
-    else if((p+1 == q) && tokens[p].type == DEREF){
-        char *endptr;
-        long number = strtol(tokens[q].str, &endptr, 0);
-        return vaddr_read(number, 4);
-    }
-    */
+    // begin at right,and calculate
     else if((tokens[q-1].type == NEG || tokens[q-1].type == NOT || tokens[q-1].type == DEREF ) && tokens[q].type == NUM){
         char *endptr;
         long number = strtol(tokens[q].str, &endptr, 0);
