@@ -201,7 +201,7 @@ uint32_t eval(int p, int q){
         printf("Bad expression\n");
         return 0;
     }
-    else if(p == q || (tokens[p].type == NEG &&(p+1 == q) )){
+    else if(p == q){
         /*Singel token.
          * for now this token should be a number
          * Return the value of the number
@@ -209,6 +209,11 @@ uint32_t eval(int p, int q){
         char *endptr;
         long number = strtol(tokens[p].str,&endptr,0);
         return number;
+    }
+    else if((p+1 == q)&& tokens[p].type == NEG){
+        char *endptr;
+        long number = strtol(tokens[q].str,&endptr,0);
+        return -number;
     }
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
