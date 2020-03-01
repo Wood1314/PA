@@ -263,7 +263,7 @@ uint32_t eval(int p, int q){
                 number = vaddr_read(number,4);
             }
         }
-        printf("%d   \n",p-q);
+        printf("%d   \n",q-p);
         return number;
     }
     else if(check_parentheses(p,q) == true){
