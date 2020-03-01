@@ -174,6 +174,8 @@ int find_priovrity(int op){
          return 0;
      case TK_AND:
          return 0;
+     case NEG:
+         return 3;
      default:
          return 101;
        
@@ -190,7 +192,7 @@ int find_dominated_op(int p, int q){
             num++;
         else if(tokens[i].type == ')')
             num--;
-        prio = find_priovrity(tokens[i].type) + num*3;
+        prio = find_priovrity(tokens[i].type) + num*4;
         if(prio <= min){
             min = prio;
             min_id = i; 
