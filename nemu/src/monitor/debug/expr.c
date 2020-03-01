@@ -29,7 +29,7 @@ static struct rule {
   {"\\*", '*'},         //mult
   {"/", '/'},         //div
   {"0x[0-9A-Fa-f]+|[0-9]+",NUM}, //number
-  {"\\$eax|\\$ebx|\\$ecx|\\$ebx|\\$ebp|\\$esp|\\$esi|\\$edi",REG},  //regeisters
+  {"\\$eax|\\$ebx|\\$ecx|\\$ebx|\\$ebp|\\$esp|\\$esi|\\$edi|\\$eip",REG},  //regeisters
   {"\\(",'('},          //left kuo
   {"\\)",')'},           //right kuo
   {"&&", TK_AND},       
