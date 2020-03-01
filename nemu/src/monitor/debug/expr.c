@@ -177,7 +177,7 @@ uint32_t expr(char *e, bool *success) {
                       || tokens[i-1].type == '-' || tokens[i-1].type == '*'\
                       || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_NQ \
                       || tokens[i-1].type == TK_AND || tokens[i-1].type == TK_OR\
-                      || tokens[i-1].type == NOT)){
+                      || tokens[i-1].type == NOT|| tokens[i-1].type == NEG)){
                 tokens[i].type = NEG;
           }
       }
@@ -186,7 +186,7 @@ uint32_t expr(char *e, bool *success) {
                          || tokens[i-1].type == '-' || tokens[i-1].type == '*'\
                          || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_NQ \
                          || tokens[i-1].type == TK_AND || tokens[i-1].type == TK_OR\
-                         || tokens[i-1].type == NOT)){
+                         || tokens[i-1].type == NOT || tokens[i-1].type == NEG ||tokens[i-1].type == DEREF)){
                 tokens[i].type = DEREF;
              }
      }
