@@ -197,7 +197,7 @@ int find_dominated_op(int p, int q){
         else if(tokens[i].type == ')')
             num--;
         prio = find_priovrity(tokens[i].type) + num*4;
-        if(prio <= min){
+        if(prio < min){
             min = prio;
             min_id = i; 
         }
@@ -271,25 +271,6 @@ uint32_t eval(int p, int q){
         long number = strtol(tokens[p].str,&endptr,0);
         return number;
     }
-    /*
-    // begin at right,and calculate
-    else if((tokens[q-1].type == NEG || tokens[q-1].type == NOT || tokens[q-1].type == DEREF ) && tokens[q].type == NUM){
-        char *endptr;
-        long number = strtol(tokens[q].str, &endptr, 0);
-        for(int i=q-1; i>=p; i--){
-            if(tokens[i].type == NEG){
-                number = -number;
-            }
-            if(tokens[i].type == NOT){
-                number = !number;
-            }
-            if(tokens[i].type == DEREF){
-                number = vaddr_read(number,4);
-            }
-        }
-        return number;
-    }
-    */
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
         * If that is the case, just throw away the parentheses.
@@ -312,7 +293,7 @@ uint32_t eval(int p, int q){
             case TK_NQ: return val1 != val2;
             case TK_OR: return val1 || val2;
             case TK_AND: return val1 && val2;
-            case NEG: printf("%d\n",1000); return -val2;
+            case NEG:  return -val2;
             case NOT: return !val2;
             case DEREF: return vaddr_read(val2,4);
             default: assert(0);
