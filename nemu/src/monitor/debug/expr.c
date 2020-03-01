@@ -232,6 +232,7 @@ uint32_t eval(int p, int q){
         long number = strtol(tokens[p].str,&endptr,0);
         return number;
     }
+    /*
     else if((p+1 == q)&& tokens[p].type == NEG){
         char *endptr;
         long number = strtol(tokens[q].str,&endptr,0);
@@ -246,6 +247,23 @@ uint32_t eval(int p, int q){
         char *endptr;
         long number = strtol(tokens[q].str, &endptr, 0);
         return vaddr_read(number, 4);
+    }
+    */
+    else if((tokens[q-1].type == NEG || tokens[q-1].type == NOT || tokens[q-1].type == DEREF ) && tokens[q].type == NUM){
+        char *endptr;
+        long number = strtol(tokens[q].str, &endptr, 0);
+        for(int i=q-1; i>=p; i--){
+            if(tokens[i].type == NEG){
+                number = -number;
+            }
+            if(tokens[i].type == NOT){
+                number = !number;
+            }
+            if(tokens[i].type == DEREF){
+                number = vaddr_read(number,4);
+            }
+        }
+        return number;
     }
     else if(check_parentheses(p,q) == true){
         /* The expression is surrounded by a matched pair of parentheses.
