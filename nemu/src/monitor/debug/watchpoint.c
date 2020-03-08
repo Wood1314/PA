@@ -43,7 +43,10 @@ void free_wp(WP* wp){
     int wp_NO = wp->NO;
     
     for(int i=wp_NO; i<free_NO-1; i++){
-        wp_pool[i] = wp_pool[i+1];
+        wp_pool[i].next = wp_pool[i+1].next;
+        strcpy(wp_pool[i].expr,wp_pool[i+1].expr);
+        wp_pool[i].old_val = wp_pool[i+1].old_val;
+        wp_pool[i].new_val = wp_pool[i+1].new_val;
     }
     if(head->next == NULL && wp == head)
         head = NULL;

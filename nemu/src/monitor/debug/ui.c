@@ -125,8 +125,11 @@ static int cmd_w(char *args){
         return 0;
     }
     else{
+        bool success = false;
         int NO = set_watchpoint(args);
         printf("Number %d watchpoint\n",NO);
+        printf("expr     = %s\n",args);
+        printf("old_val  = %#x\n",expr(args,&success));
         return 0;
     }
 }
