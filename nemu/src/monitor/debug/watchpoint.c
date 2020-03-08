@@ -52,6 +52,14 @@ int set_watchpoint(char *e){
     if(strlen(e) >= 30 )
         assert(0);
     strcpy(new_point->expr,e);
+
+    bool success = false;
+    new_point->old_val = expr(e,&success);
+    if(!success){
+        printf("Wrong express!\n");
+        assert(0);
+    }
+    new_point->new_val = new_point->old_val;
     return NO;
 }
 
