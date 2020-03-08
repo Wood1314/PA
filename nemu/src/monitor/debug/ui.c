@@ -48,7 +48,7 @@ static int cmd_si(char *args){
   }
   return 0;
 }
-
+extern void list_watchpoint();
 static int cmd_info(char *args){
     if(args == NULL) {printf("Please input argument\n"); return 0;}
     else{
@@ -62,7 +62,7 @@ static int cmd_info(char *args){
             }
         }
         else if(!strcmp(n_str,"w")){
-            printf("hahai\n");
+            list_watchpoint();
         }
     }
     return 0;
@@ -138,7 +138,6 @@ static int cmd_d(char *args){
     }
     else{
         int n = atoi(args);
-        printf("Number is %d\n",n);
         if(delete_watchpoint(n)){
             printf("delete %d watchpoint success\n",n);
         }
