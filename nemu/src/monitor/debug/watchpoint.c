@@ -43,7 +43,10 @@ void free_wp(WP* wp){
     free_->next = wp;
     //unlink
     int n_NO = wp->NO;
-    wp_pool[n_NO-1].next = NULL;
+    if(head == wp)
+        head = NULL;
+    else 
+        wp_pool[n_NO-1].next = NULL;
     return;
 }
 
@@ -84,9 +87,9 @@ bool delete_watchpoint(int NO){
 
 void list_watchpoint(){
     WP *head2 = head;
-    printf("NO Expr       Old Value\n");
+    printf("NO Expr      Old Value\n");
     while(head2){
-        printf("%d %-8s %d\n",head2->NO,head2->expr,head2->old_val);
+        printf("%d  %-9s %#x\n",head2->NO,head2->expr,head2->old_val);
         head2 = head2->next;
     }
     return;
