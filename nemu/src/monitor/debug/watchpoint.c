@@ -63,5 +63,20 @@ int set_watchpoint(char *e){
     return NO;
 }
 
+bool delete_watchpoint(int NO){
+    WP *head2 = head;
+    if(head2 == NULL)
+        return false;
+    while(head2->next){
+        head2 = head2->next;
+    }
+    if(NO > head2->NO){
+        return false;
+    }
+    else{
+        free_wp(&wp_pool[NO]);
+        return true;
+    }
+}
 
 

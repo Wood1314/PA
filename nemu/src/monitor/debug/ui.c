@@ -118,7 +118,7 @@ static int cmd_p(char *args){
 
 
 extern int set_watchpoint(char *e);
-
+extern bool delete_watchpoint(int NO);
 static int cmd_w(char *args){
     if(args == NULL){
         printf("Please input argument\n");
@@ -137,6 +137,13 @@ static int cmd_d(char *args){
         return 0;
     }
     else{
+        int n = atoi(args);
+        if(delete_watchpoint(n)){
+            printf("delete %d watchpoint success\n",n);
+        }
+        else{
+            printf("Not found\n");
+        }
         return 0;
     }
 }
