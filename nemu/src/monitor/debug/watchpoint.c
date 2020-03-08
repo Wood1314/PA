@@ -79,4 +79,13 @@ bool delete_watchpoint(int NO){
     }
 }
 
+void list_watchpoint(){
+    WP *head2 = head;
+    printf("NO Expr       Old Value\n");
+    while(head2){
+        printf("%d %8s %d",head2->NO,head2->expr,head2->old_val);
+        head2 = head2->next;
+    }
+    return;
+}
 
