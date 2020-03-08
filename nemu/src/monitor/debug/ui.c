@@ -138,6 +138,7 @@ static int cmd_d(char *args){
     }
     else{
         int n = atoi(args);
+        printf("Number is %d\n",n);
         if(delete_watchpoint(n)){
             printf("delete %d watchpoint success\n",n);
         }
