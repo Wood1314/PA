@@ -116,6 +116,31 @@ static int cmd_p(char *args){
 
 }
 
+
+extern int set_watchpoint(char *e);
+
+static int cmd_w(char *args){
+    if(args == NULL){
+        printf("Please input argument\n");
+        return 0;
+    }
+    else{
+        int NO = set_watchpoint(args);
+        printf("Number %d watchpoint\n",NO);
+        return 0;
+    }
+}
+
+static int cmd_d(char *args){
+    if(args == NULL){
+        printf("Please input argument\n");
+        return 0;
+    }
+    else{
+        return 0;
+    }
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -131,7 +156,9 @@ static struct {
   /* TODO: Add more commands */
   { "info", "Show all the regester' information", cmd_info },
   { "x", "Show the memory things", cmd_x },
-  { "p", "Show varibeals and numbers", cmd_p }
+  { "p", "Show varibeals and numbers", cmd_p },
+  { "w", "Set the watch point", cmd_w },
+  { "d", "Delete the watch point", cmd_d }
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
