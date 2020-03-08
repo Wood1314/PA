@@ -30,7 +30,10 @@ WP *new_wp(){
     free_ = free_->next;
     //insert
     temp->next = NULL;
-    wp_pool[new_NO-1].next = temp;
+    if(head != NULL)
+        wp_pool[new_NO-1].next = temp;
+    else
+        head = temp;
     return temp;
 }
 
