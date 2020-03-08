@@ -38,15 +38,19 @@ WP *new_wp(){
 }
 
 void free_wp(WP* wp){
-    //insert
-    wp->next = free_->next;
-    free_->next = wp;
+    int free_NO = free_->NO;
     //unlink
-    int n_NO = wp->NO;
-    if(head == wp)
+    int wp_NO = wp->NO;
+    
+    for(int i=wp_NO; i<free_NO-1; i++){
+        wp_pool[i] = wp_pool[i+1];
+    }
+    if(head->next == NULL && wp == head)
         head = NULL;
-    else 
-        wp_pool[n_NO-1].next = NULL;
+    //insert
+    WP *temp = free_;
+    free_ = &wp_pool[free_NO-1];
+    free_->next = temp;
     return;
 }
 
