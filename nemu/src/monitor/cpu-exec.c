@@ -38,6 +38,8 @@ void cpu_exec(uint64_t n) {
         printf("old value =  %#010x\n",change->old_val);
         printf("new_value =  %#010x\n",change->new_val);
         printf("program pause\n");
+        change->old_val = change->new_val;
+        break;
         nemu_state = NEMU_STOP;
     }
 #endif
