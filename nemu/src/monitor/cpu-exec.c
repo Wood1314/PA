@@ -25,6 +25,9 @@ void cpu_exec(uint64_t n) {
 
   bool print_flag = n < MAX_INSTR_TO_PRINT;
 
+  if(print_flag)
+      printf("Helll woadsd\n");
+
   for (; n > 0; n --) {
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
