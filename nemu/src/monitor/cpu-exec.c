@@ -32,8 +32,14 @@ void cpu_exec(uint64_t n) {
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
     WP* change = scan_watchpoint();
-    if(change != NULL)
-        printf("Helllo asdasdasd\n");
+    if(change != NULL){
+        printf("Hi watchpoint %d at addr %#010x\n",change->NO,cpu.eip);
+        printf("expr      =  %s\n",change->expr);
+        printf("old value =  %#010x\n",change->old_val);
+        printf("new_value =  %#010x\n",change->new_val);
+        printf("program pause\n");
+        nemu_state = NEMU_STOP;
+    }
 #endif
 
 #ifdef HAS_IOE

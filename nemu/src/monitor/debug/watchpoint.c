@@ -109,7 +109,6 @@ WP* scan_watchpoint(){
     while(head2){
         head2->new_val = expr(head2->expr,&success);
         if(head2->new_val != head2->old_val){
-            head2->old_val = head2->new_val;
             return head2;
         }
         head2 = head2->next;
