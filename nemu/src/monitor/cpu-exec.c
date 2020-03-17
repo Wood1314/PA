@@ -23,15 +23,17 @@ void cpu_exec(uint64_t n) {
   }
   nemu_state = NEMU_RUNNING;
 
-  bool print_flag = n < MAX_INSTR_TO_PRINT;
-
-  if(print_flag)
-      printf("Helll woadsd\n");
+  //bool print_flag = n < MAX_INSTR_TO_PRINT;
+  bool print_flag;
+  int i = 0;
 
   for (; n > 0; n --) {
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
     uint32_t eip_now = cpu.eip;
+    i++;
+    print_flag = i < MAX_INSTR_TO_PRINT;
+
     exec_wrapper(print_flag);
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
