@@ -95,11 +95,24 @@ bool delete_watchpoint(int NO){
 
 void list_watchpoint(){
     WP *head2 = head;
-    printf("NO Expr      Old Value\n");
+    printf("NO Expr               Old Value\n");
     while(head2){
-        printf("%d  %-9s %#x\n",head2->NO,head2->expr,head2->old_val);
+        printf("%d  %-18s %#x\n",head2->NO,head2->expr,head2->old_val);
         head2 = head2->next;
     }
     return;
 }
-
+//scan the watch point on every comnd
+WP* scan_watchpoint(){
+    WP *head2 = head;
+    bool success = false;
+    while(head2){
+        head2->new_val = expr(head2->expr,&success);
+        if(head2->new_val != head2->old_val){
+            head2->old_val = head2->new_val;
+            return head2;
+        }
+        head2 = head2->next;
+    }
+    return NULL;
+}

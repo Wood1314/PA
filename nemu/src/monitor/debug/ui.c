@@ -119,6 +119,7 @@ static int cmd_p(char *args){
 
 extern int set_watchpoint(char *e);
 extern bool delete_watchpoint(int NO);
+//set the watch point
 static int cmd_w(char *args){
     if(args == NULL){
         printf("Please input argument\n");
@@ -133,7 +134,7 @@ static int cmd_w(char *args){
         return 0;
     }
 }
-
+//delete the watch point
 static int cmd_d(char *args){
     if(args == NULL){
         printf("Please input argument\n");
