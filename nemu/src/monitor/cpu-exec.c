@@ -46,7 +46,6 @@ void cpu_exec(uint64_t n) {
         printf("program pause\n");
         change->old_val = change->new_val;
         nemu_state = NEMU_STOP;
-        break;
     }
 #endif
 
