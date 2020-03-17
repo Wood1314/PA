@@ -28,12 +28,13 @@ void cpu_exec(uint64_t n) {
   for (; n > 0; n --) {
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
+    uint32_t eip_now = cpu.eip;
     exec_wrapper(print_flag);
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
     WP* change = scan_watchpoint();
     if(change != NULL){
-        printf("Hi watchpoint %d at addr %#010x\n",change->NO,cpu.eip);
+        printf("Hi watchpoint %d at addr %#010x\n",change->NO,eip_now);
         printf("expr      =  %s\n",change->expr);
         printf("old value =  %#010x\n",change->old_val);
         printf("new_value =  %#010x\n",change->new_val);
