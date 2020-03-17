@@ -42,9 +42,13 @@ static int cmd_si(char *args){
   else{
       char *n_str = strtok(args, " ");
       uint64_t n = atoll(n_str);
+      /*
       while(n--){
           cpu_exec(1);
       }
+      */
+      cpu_exec(n);
+
   }
   return 0;
 }
@@ -134,7 +138,7 @@ static int cmd_w(char *args){
         return 0;
     }
 }
-//delete the watch point
+
 static int cmd_d(char *args){
     if(args == NULL){
         printf("Please input argument\n");
