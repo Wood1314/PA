@@ -72,20 +72,26 @@ static int cmd_info(char *args){
     return 0;
 }
 
+extern uint32_t expr(char *e, bool *success);
+
 static int cmd_x(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
     else{
         printf("%-10s\t%-10s\t%-10s\n","Address","DwordBlock","DwordBlock");
         char *n_str = strtok(args, " ");
+        bool success = false;
+        uint32_t addr; 
         if(!memcmp(n_str,"0x",2)){
-           long addr = strtol(n_str,NULL,16);
+           //long addr = strtol(n_str,NULL,16);
+           addr  = expr(n_str, &success);
            printf("%#010x\t",(uint32_t)addr);
            printf("%#010x\n",vaddr_read(addr,4)); 
         }
         else{
             int n = atoi(n_str);
             n_str = strtok(NULL, " ");
-            long addr = strtol(n_str,NULL, 16);
+            //long addr = strtol(n_str,NULL, 16);
+            addr = expr(n_str, &success);
             while(n){
                 printf("%#010x\t",(uint32_t)addr);
                 for(int i=1; i<=2; i++){
@@ -101,7 +107,7 @@ static int cmd_x(char *args){
     return 0;
 }
 
-extern uint32_t expr(char *e, bool *success);
+
 
 static int cmd_p(char *args){
     if(args == NULL){printf("Please input argument\n"); return 0;}
