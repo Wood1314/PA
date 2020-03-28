@@ -48,6 +48,9 @@ void free_wp(WP* wp){
             strcpy(wp_pool[i].expr,wp_pool[i+1].expr);
             wp_pool[i].old_val = wp_pool[i+1].old_val;
             wp_pool[i].new_val = wp_pool[i+1].new_val;
+            wp_pool[i].type = wp_pool[i+1].type;
+            wp_pool[i].breakpoint_addr = wp_pool[i+1].breakpoint_addr;
+            wp_pool[i].op = wp_pool[i+1].op;
        }
         wp_pool[free_NO-2].next = NULL;
     }
