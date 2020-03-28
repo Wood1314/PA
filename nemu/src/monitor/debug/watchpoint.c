@@ -60,21 +60,37 @@ void free_wp(WP* wp){
 
 extern uint32_t expr(char *e, bool *success);
 
-int set_watchpoint(char *e){
-    WP *new_point = new_wp();
-    int NO = new_point->NO;
-    if(strlen(e) >= 30 )
-        assert(0);
-    strcpy(new_point->expr,e);
+int set_watchpoint(char *e,int type){
+    if(type == WATCH_POINT){
+        WP *new_point = new_wp();
+        new_point->type = WATCH_POINT;
+        int NO = new_point->NO;
+        if(strlen(e) >= 30 )
+            assert(0);
+        strcpy(new_point->expr,e);
 
-    bool success = false;
-    new_point->old_val = expr(e,&success);
-    if(!success){
-        printf("Wrong express!\n");
-        assert(0);
+        bool success = false;
+        new_point->old_val = expr(e,&success);
+        if(!success){
+            printf("Wrong express!\n");
+            assert(0);
+        }
+        new_point->new_val = new_point->old_val;
+        return NO;
     }
-    new_point->new_val = new_point->old_val;
-    return NO;
+    else {
+        WP *new_point = new_wp();
+        new_point->type = BREAK_POINT;
+        //set the NO
+        int NO = new_point->NO;
+        bool success = false;
+        //set the breakpoint addr
+        new_point->breakpoint_addr = expr(e, &success);
+        if(!success){
+            printf("Wrong express!\n");
+        }
+        return NO;
+    }
 }
 
 bool delete_watchpoint(int NO){
@@ -97,8 +113,14 @@ void list_watchpoint(){
     WP *head2 = head;
     printf("NO Expr               Old Value\n");
     while(head2){
-        printf("%d  %-18s %#x\n",head2->NO,head2->expr,head2->old_val);
-        head2 = head2->next;
+        if(head2->type == WATCH_POINT){
+            printf("%d  %-18s %#x\n",head2->NO,head2->expr,head2->old_val);
+            head2 = head2->next; 
+        }
+        else if(head2->type == BREAK_POINT){
+            printf("%d  at addr %#010x\n",head2->NO,head2->breakpoint_addr);
+            head2 = head2->next;
+        }
     }
     return;
 }
@@ -107,9 +129,11 @@ WP* scan_watchpoint(){
     WP *head2 = head;
     bool success = false;
     while(head2){
-        head2->new_val = expr(head2->expr,&success);
-        if(head2->new_val != head2->old_val){
-            return head2;
+        if(head2->type == WATCH_POINT){
+            head2->new_val = expr(head2->expr,&success);
+            if(head2->new_val != head2->old_val){
+                return head2;
+            }
         }
         head2 = head2->next;
     }

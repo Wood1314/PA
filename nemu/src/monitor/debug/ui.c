@@ -127,7 +127,7 @@ static int cmd_p(char *args){
 }
 
 
-extern int set_watchpoint(char *e);
+extern int set_watchpoint(char *e, int type);
 extern bool delete_watchpoint(int NO);
 //set the watch point
 static int cmd_w(char *args){
@@ -137,10 +137,25 @@ static int cmd_w(char *args){
     }
     else{
         bool success = false;
-        int NO = set_watchpoint(args);
+        int NO = set_watchpoint(args, WATCH_POINT);
         printf("Number %d watchpoint\n",NO);
         printf("expr     = %s\n",args);
         printf("old_val  = %#x\n",expr(args,&success));
+        return 0;
+    }
+}
+
+//set the breakpoint
+static int cmd_b(char *args){
+    if(args == NULL){
+        printf("Please input argument\n");
+        return 0;
+    }
+    else{
+        bool success = false;
+        int NO = set_watchpoint(args, BREAK_POINT);
+        printf("Number %d breakpoint\n",NO);
+        printf("breakpont at %#010x\n",expr(args,&success));
         return 0;
     }
 }
@@ -162,6 +177,8 @@ static int cmd_d(char *args){
     }
 }
 
+
+
 static int cmd_help(char *args);
 
 static struct {
@@ -179,7 +196,8 @@ static struct {
   { "x", "Show the memory things", cmd_x },
   { "p", "Show varibeals and numbers", cmd_p },
   { "w", "Set the watch point", cmd_w },
-  { "d", "Delete the watch point", cmd_d }
+  { "d", "Delete the watch point", cmd_d },
+  { "b", "Make breakpoint", cmd_b }
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
