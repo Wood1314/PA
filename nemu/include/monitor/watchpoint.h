@@ -18,7 +18,7 @@ typedef struct watchpoint {
  //add for breakpoint
  int type;
  uint32_t breakpoint_addr;
- char op;
+ uint32_t op;
 } WP;
 
 #endif
