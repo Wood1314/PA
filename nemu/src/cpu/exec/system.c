@@ -29,8 +29,8 @@ make_EHelper(mov_cr2r) {
 
 make_EHelper(int) {
   //change the op and stop the program
-  scan_breakpoint(); 
   decoding.seq_eip = cpu.eip;
+  scan_breakpoint(); 
   nemu_state = NEMU_STOP;
  // print_asm("int %s", id_dest->str);
   
