@@ -1,5 +1,6 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
+#include "monitor/monitor.h"
 
 #define NR_WP 32
 
@@ -162,5 +163,16 @@ WP* scan_watchpoint(){
         head2 = head2->next;
     }
     return NULL;
+}
+void scan_breakpoint(){
+    nemu_state = NEMU_STOP;
+    WP *head2 = head;
+    while(head2){
+        if(head2->type == BREAK_POINT){
+            vaddr_write(head2->breakpoint_addr,head2->op,1);
+        }
+        head2 = head2->next;
+    }
+    return;
 }
 

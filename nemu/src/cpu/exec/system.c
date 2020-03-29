@@ -1,7 +1,10 @@
 #include "cpu/exec.h"
+#include "nemu.h"
 
 void diff_test_skip_qemu();
 void diff_test_skip_nemu();
+
+extern void scan_breakpoint();
 
 make_EHelper(lidt) {
   TODO();
@@ -26,8 +29,8 @@ make_EHelper(mov_cr2r) {
 }
 
 make_EHelper(int) {
-  TODO();
-
+  //change the op and stop the program
+  scan_breakpoint(); 
   print_asm("int %s", id_dest->str);
 
 #ifdef DIFF_TEST
