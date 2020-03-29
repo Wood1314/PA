@@ -137,11 +137,7 @@ void set_breakpoint(){
     WP *head2 = head;
     while(head2){
         if(head2->type == BREAK_POINT){
-            uint32_t old_op = vaddr_read(head2->breakpoint_addr,1);
-            if(old_op != 0xcc){
-                head2->op = old_op;
-                vaddr_write(head2->breakpoint_addr,1,0xcc);
-            }
+            vaddr_write(head2->breakpoint_addr,1,0xcc);
         }
         head2 = head2->next;
     }
@@ -167,7 +163,7 @@ void scan_breakpoint(){
     WP *head2 = head;
     while(head2){
         if(head2->type == BREAK_POINT){
-            vaddr_write(head2->breakpoint_addr,head2->op,1);
+            vaddr_write(head2->breakpoint_addr,1,head2->op);
             printf("%#x\n",head2->op);
         }
         head2 = head2->next;
