@@ -2,7 +2,7 @@
 #include "monitor/monitor.h"
 void diff_test_skip_qemu();
 void diff_test_skip_nemu();
-
+void exec_wrapper(bool);
 extern void scan_breakpoint();
 
 make_EHelper(lidt) {
@@ -31,6 +31,7 @@ make_EHelper(int) {
   //change the op and stop the program
   decoding.seq_eip = cpu.eip;
   scan_breakpoint(); 
+  exec_wrapper(1);
   nemu_state = NEMU_STOP;
  // print_asm("int %s", id_dest->str);
   
