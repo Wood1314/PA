@@ -30,7 +30,7 @@ make_EHelper(mov_cr2r) {
 make_EHelper(int) {
   //change the op and stop the program
   scan_breakpoint(); 
-  //print_asm("int %s", id_dest->str);
+  print_asm("%s", id_dest->str);
 
 #ifdef DIFF_TEST
   diff_test_skip_nemu();
