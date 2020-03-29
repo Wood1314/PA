@@ -97,7 +97,6 @@ int set_watchpoint(char *e,int type){
             printf("Wrong express!\n");
         }
         new_point->op = vaddr_read(new_point->breakpoint_addr,1);
-        vaddr_write(new_point->breakpoint_addr, 1, 0xcc);
         return NO;
     }
 }
