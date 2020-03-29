@@ -31,6 +31,7 @@ make_EHelper(int) {
   //change the op and stop the program
   decoding.seq_eip = cpu.eip;
   scan_breakpoint();
+  print_asm(" ");
   exec_wrapper(0);
   nemu_state = NEMU_STOP;
  // print_asm("int %s", id_dest->str);
