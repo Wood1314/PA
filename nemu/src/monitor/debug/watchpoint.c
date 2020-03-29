@@ -165,7 +165,6 @@ WP* scan_watchpoint(){
     return NULL;
 }
 void scan_breakpoint(){
-    nemu_state = NEMU_STOP;
     WP *head2 = head;
     while(head2){
         if(head2->type == BREAK_POINT){
@@ -173,6 +172,8 @@ void scan_breakpoint(){
         }
         head2 = head2->next;
     }
+
+    nemu_state = NEMU_STOP;
     return;
 }
 
