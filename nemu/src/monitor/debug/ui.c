@@ -5,6 +5,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint64_t);
+extern void set_breakpoint();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -25,6 +26,7 @@ char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
+  set_breakpoint();
   cpu_exec(-1);
   return 0;
 }
@@ -35,7 +37,7 @@ static int cmd_q(char *args) {
 
 static int cmd_si(char *args){
   /* get args_str to uint64*/
-  
+  set_breakpoint(); 
   if(args == NULL){
       cpu_exec(1);     
   }

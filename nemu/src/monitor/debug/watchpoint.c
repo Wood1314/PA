@@ -7,6 +7,7 @@ static WP wp_pool[NR_WP];
 static WP *head, *free_;
 
 extern uint32_t vaddr_read(vaddr_t addr,int len); 
+extern void vaddr_write(vaddr_t addr, int len, uint32_t data); 
 
 void init_wp_pool() {
   int i;
@@ -95,7 +96,7 @@ int set_watchpoint(char *e,int type){
             printf("Wrong express!\n");
         }
         new_point->op = vaddr_read(new_point->breakpoint_addr,1);
-        printf("the op is %#x",new_point->op);
+        vaddr_write(new_point->breakpoint_addr, 1, 0xcc);
         return NO;
     }
 }
