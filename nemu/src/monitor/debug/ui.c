@@ -182,7 +182,6 @@ static int cmd_d(char *args){
 
 
 static int cmd_help(char *args);
-
 static struct {
   char *name;
   char *description;
