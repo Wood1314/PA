@@ -181,7 +181,7 @@ static int cmd_d(char *args){
 }
 
 
-
+static int cmd_stack(char *args);
 static int cmd_help(char *args);
 static struct {
   char *name;
@@ -199,10 +199,26 @@ static struct {
   { "p", "Show varibeals and numbers", cmd_p },
   { "w", "Set the watch point", cmd_w },
   { "d", "Delete the watch point", cmd_d },
-  { "b", "Make breakpoint", cmd_b }
+  { "b", "Make breakpoint", cmd_b },
+  { "stack", "Show the stack", cmd_stack }
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
+
+static int cmd_stack(char *args) {
+    if(args == NULL) { printf("Please input at least one argument\n");  return 0; }
+    else{
+        char *arg = strtok(NULL, " ");
+        printf("%-10s\t%-10s\n","Address","DwordBlock");
+        int n = atoi(arg);
+        uint32_t esp = cpu.esp;
+        for(int i=0; i<n; i++) {
+            printf("%#010x\t%#010x\n",esp,vaddr_read(esp,4));
+            esp = esp + 4;
+        } 
+        return 0;
+    }
+}
 
 static int cmd_help(char *args) {
   /* extract the first argument */
