@@ -66,7 +66,7 @@ static int cmd_info(char *args){
                 printf("%s:\t%#010x\t", regsl[i], cpu.gpr[i]._32);
                 printf("\n");
             }
-            printf("elfags: %#010x\t",cpu.eflags);
+            printf("elfags: %#010x\t\n",cpu.eflags);
         }
         else if(!strcmp(n_str,"w")){
             list_watchpoint();
