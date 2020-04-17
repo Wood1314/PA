@@ -149,7 +149,7 @@ void difftest_step(uint32_t eip) {
 
   // TODO: Check the registers state with QEMU.
   // Set `diff` as `true` if they are not the same.
-  if(memcmp(&cpu, &r, sizeof(rtlreg_t)*9)){
+  if(memcmp(&cpu, &r, sizeof(rtlreg_t)*10)){
     diff = true;
     printf("QNEUM is different");
   }
