@@ -1,8 +1,22 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  TODO();
+  rtl_add(&t0, &id_dest->val, &id_src->val);
+  operand_write(id_dest, &t0);
 
+  rtl_sltu(&t2, &t0, &id_src->val);                //if sum < x
+  rtl_set_CF(&t2);
+
+  rtl_update_ZFSF(&t0, id_dest->width);
+  rtl_msb(&t0, &id_src->val, id_dest->width);     //sign of x
+  rtl_msb(&t1, &id_dest->val, id_dest->width);    //sign of y
+  rtl_xor(&t2, &t0, &t1);                         //x ^ y
+  rtl_not(&t2);                                   //!t2
+  rtl_get_SF(&t1);                                //t0 = SF
+  rtl_xor(&t1, &t0, &t1);                         //SF ^ x
+  rtl_and(&t0, &t2, &t1);                         //(!(x^y))&(x^SF)
+  rtl_set_OF(&t0);                                //set OF
+  
   print_asm_template2(add);
 }
 
@@ -12,11 +26,11 @@ make_EHelper(sub) {
   rtl_sltu(&t3, &id_src->val, &id_dest->val);
   operand_write(id_dest, &t2);
   
-  rtl_set_OF(&t3);
+  rtl_set_CF(&t3);
 
   rtl_update_ZFSF(&t2, id_dest->width);
-  rtl_msb(&t0, &t0, id_dest->val);                   //sign of x
-  rtl_msb(&t1, &id_src->val, id_src->val);           //sign of y
+  rtl_msb(&t0, &t0, id_dest->width);                   //sign of x
+  rtl_msb(&t1, &id_src->val, id_src->width);           //sign of y
   rtl_xor(&t3, &t0, &t1);                            // x ^ y
   rtl_get_SF(&t1);                                   //SF = t1
   rtl_xor(&t1, &t0, &t1);                            // SF ^ x
