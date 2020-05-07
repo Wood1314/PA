@@ -12,6 +12,7 @@ void reg_test() {
   uint32_t sample[8];
   uint32_t eip_sample = rand();
   cpu.eip = eip_sample;
+  cpu.eflags = 0;
 
   int i;
   for (i = R_EAX; i <= R_EDI; i ++) {
