@@ -11,7 +11,7 @@ make_EHelper(add) {
   rtl_msb(&t0, &id_src->val, id_dest->width);     //sign of x
   rtl_msb(&t1, &id_dest->val, id_dest->width);    //sign of y
   rtl_xor(&t2, &t0, &t1);                         //x ^ y
-  rtl_not(&t2);                                   //!t2
+  rtl_eq0(&t2, &t2);                              //!t2
   rtl_get_SF(&t1);                                //t0 = SF
   rtl_xor(&t1, &t0, &t1);                         //SF ^ x
   rtl_and(&t0, &t2, &t1);                         //(!(x^y))&(x^SF)
