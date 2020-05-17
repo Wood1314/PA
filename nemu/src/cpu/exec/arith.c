@@ -41,13 +41,13 @@ make_EHelper(sub) {
 
 make_EHelper(cmp) {
   rtl_sub(&t2, &id_dest->val, &id_src->val);
-  rtl_lm(&t0, &id_dest->val, id_dest->width);
+  //rtl_lm(&t0, &id_dest->val, id_dest->width);
   rtl_sltu(&t3, &id_dest->val, &id_src->val);
   
   rtl_set_CF(&t3);
 
   rtl_update_ZFSF(&t2, id_dest->width);
-  rtl_msb(&t0, &t0, id_dest->width);                   //sign of x
+  rtl_msb(&t0, &t2, id_dest->width);                   //sign of x
   rtl_msb(&t1, &id_src->val, id_src->width);           //sign of y
   rtl_xor(&t3, &t0, &t1);                            // x ^ y
   rtl_get_SF(&t1);                                   //SF = t1
