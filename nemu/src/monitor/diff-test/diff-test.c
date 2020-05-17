@@ -6,6 +6,10 @@
 
 #include "protocol.h"
 #include <stdlib.h>
+#define getCF 1
+#define getZF 1<<5
+#define getSF 1<<6
+#define getOF 1<<10
 
 bool gdb_connect_qemu(void);
 bool gdb_memcpy_to_qemu(uint32_t, void *, int);
@@ -152,19 +156,33 @@ void difftest_step(uint32_t eip) {
   // Set `diff` as `true` if they are not the same.
   if(memcmp(&cpu, &r, sizeof(rtlreg_t)*9)){
     diff = true;
-    printf("QNEUM is different");
+    printf("cpu.eax:\t%#010x\tqnume.eax:\t%#010x\n",cpu.eax,r.eax);
+    printf("cpu.ecx:\t%#010x\tqnume.ecx:\t%#010x\n",cpu.ecx,r.ecx);
+    printf("cpu.edx:\t%#010x\tqnume.edx:\t%#010x\n",cpu.edx,r.edx);
+    printf("cpu.ebx:\t%#010x\tqnume.ebx:\t%#010x\n",cpu.ebx,r.ebx);
+    printf("cpu.esp:\t%#010x\tqnume.esp:\t%#010x\n",cpu.esp,r.esp);
+    printf("cpu.ebp:\t%#010x\tqnume.ebp:\t%#010x\n",cpu.ebp,r.ebp);
+    printf("cpu.esi:\t%#010x\tqnume.esi:\t%#010x\n",cpu.esi,r.esi);
+    printf("cpu.edi:\t%#010x\tqnume.edi:\t%#010x\n",cpu.edi,r.edi);
+    printf("cpu.eip:\t%#010x\tqnume.eip:\t%#010x\n",cpu.eip,r.eip);
   }
-
+  if((cpu.eflags & getCF) != (r.eflags & getCF)){
+    diff = true;
+    printf("cpu.CF\t%d\tqnume.CF\t%d\n",cpu.eflags&getCF,r.eflags&getCF);
+  }
+  if((cpu.eflags & getZF) != (r.eflags & getZF)){
+    diff = true;
+    printf("cpu.ZF\t%d\tqnume.ZF\t%d\n",cpu.eflags&getZF,r.eflags&getZF);
+  }
+  if((cpu.eflags & getSF) != (r.eflags & getSF)){
+    diff = true;
+    printf("cpu.SF\t%d\tqnume.SF\t%d\n",cpu.eflags&getSF,r.eflags&getSF);
+  }
+  if((cpu.eflags & getOF) != (r.eflags & getOF)){
+    diff = true;
+    printf("cpu.OF\t%d\tqnume.OF\t%d\n",cpu.eflags&getOF,r.eflags&getOF);
+  }
   if (diff) {
     nemu_state = NEMU_END;
-    printf("cpu.eax:\t%#010x\tqnume.eax:\t%#010x\t",cpu.eax,r.eax);
-    printf("cpu.ecx:\t%#010x\tqnume.ecx:\t%#010x\t",cpu.ecx,r.ecx);
-    printf("cpu.edx:\t%#010x\tqnume.edx:\t%#010x\t",cpu.edx,r.edx);
-    printf("cpu.ebx:\t%#010x\tqnume.ebx:\t%#010x\t",cpu.ebx,r.ebx);
-    printf("cpu.esp:\t%#010x\tqnume.esp:\t%#010x\t",cpu.esp,r.esp);
-    printf("cpu.ebp:\t%#010x\tqnume.ebp:\t%#010x\t",cpu.ebp,r.ebp);
-    printf("cpu.esi:\t%#010x\tqnume.esi:\t%#010x\t",cpu.esi,r.esi);
-    printf("cpu.edi:\t%#010x\tqnume.edi:\t%#010x\t",cpu.edi,r.edi);
-    printf("cpu.eip:\t%#010x\tqnume.eip:\t%#010x\t",cpu.eip,r.eip);
   }
 }
