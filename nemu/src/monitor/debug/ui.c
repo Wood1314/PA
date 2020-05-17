@@ -67,8 +67,7 @@ static int cmd_info(char *args){
                 printf("\n");
             }
             //printf("elfags: %#010x\t\n",cpu.eflags);
-           // printf("CF: %d   OF: %d   SF: %d   ZF: %d\n", cpu.eflags, cpu.eflags.OF, cpu.eflags.SF, cpu.eflags.ZF);
-           printf("eflags %d:",cpu.CF);
+           printf("CF: %d   OF: %d   SF: %d   ZF: %d\n", cpu.CF, cpu.OF, cpu.SF,cpu.ZF);
         }
         else if(!strcmp(n_str,"w")){
             list_watchpoint();
