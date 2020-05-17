@@ -33,17 +33,21 @@ typedef struct {
   };
   vaddr_t eip;
   //eflags
-  union{
-      struct{
-          uint8_t CF:1;
-          uint8_t OF:1;
-          uint8_t SF:1;
-          uint8_t ZF:1;
-          uint8_t IF:1;
-      };
-      uint32_t eflags;
+  union {
+        uint32_t eflags;
+        struct 
+        {
+          unsigned CF:1;
+          unsigned :5;
+          unsigned ZF:1;
+          unsigned SF:1;
+          unsigned :1;
+          unsigned IF:1;
+          unsigned :1;
+          unsigned OF:1;
+          unsigned :20;
+        };
   };
-
 } CPU_state;
 
 extern CPU_state cpu;

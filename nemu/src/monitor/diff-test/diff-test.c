@@ -156,5 +156,14 @@ void difftest_step(uint32_t eip) {
 
   if (diff) {
     nemu_state = NEMU_END;
+    printf("cpu.eax:\t%#010x\tqnume.eax:\t%#010x\t",cpu.eax,r.eax);
+    printf("cpu.ecx:\t%#010x\tqnume.ecx:\t%#010x\t",cpu.ecx,r.ecx);
+    printf("cpu.edx:\t%#010x\tqnume.edx:\t%#010x\t",cpu.edx,r.edx);
+    printf("cpu.ebx:\t%#010x\tqnume.ebx:\t%#010x\t",cpu.ebx,r.ebx);
+    printf("cpu.esp:\t%#010x\tqnume.esp:\t%#010x\t",cpu.esp,r.esp);
+    printf("cpu.ebp:\t%#010x\tqnume.ebp:\t%#010x\t",cpu.ebp,r.ebp);
+    printf("cpu.esi:\t%#010x\tqnume.esi:\t%#010x\t",cpu.esi,r.esi);
+    printf("cpu.edi:\t%#010x\tqnume.edi:\t%#010x\t",cpu.edi,r.edi);
+    printf("cpu.eip:\t%#010x\tqnume.eip:\t%#010x\t",cpu.eip,r.eip);
   }
 }
