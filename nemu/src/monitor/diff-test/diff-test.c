@@ -7,9 +7,9 @@
 #include "protocol.h"
 #include <stdlib.h>
 #define getCF 1
-#define getZF 1<<5
-#define getSF 1<<6
-#define getOF 1<<10
+#define getZF 1<<6
+#define getSF 1<<7
+#define getOF 1<<11
 
 bool gdb_connect_qemu(void);
 bool gdb_memcpy_to_qemu(uint32_t, void *, int);
