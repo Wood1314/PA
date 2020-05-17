@@ -1,7 +1,7 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  rtl_add(&t0, &id_dest->val, &id_dest->val);
+  rtl_add(&t0, &id_dest->val, &id_src->val);
   operand_write(id_dest, &t0);
 
   rtl_sltu(&t2, &t0, &id_src->val);                //if sum < x
