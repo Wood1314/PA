@@ -65,7 +65,19 @@ make_EHelper(inc) {
 }
 
 make_EHelper(dec) {
-  TODO();
+  rtl_subi(&t2, &id_dest->val, 1);
+  rtl_sltui(&t3, &id_dest->val, 1);
+  operand_write(id_dest, &t2);
+  rtl_set_CF(&t3);
+
+  rtl_update_ZFSF(&t2, id_dest->width);
+  rtl_msb(&t0, &id_dest->val, id_dest->width);                   //sign of x
+  rtl_li(&t1, 0);                                    //sign of y
+  rtl_xor(&t3, &t0, &t1);                            // x ^ y
+  rtl_get_SF(&t1);                                   //SF = t1
+  rtl_xor(&t1, &t0, &t1);                            // SF ^ x
+  rtl_and(&t0, &t1, &t3);                             //t3 & t1
+  rtl_set_OF(&t0);
 
   print_asm_template1(dec);
 }
