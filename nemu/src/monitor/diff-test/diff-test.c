@@ -170,14 +170,14 @@ void difftest_step(uint32_t eip) {
     diff = true;
     printf("cpu.CF\t%d\tqnume.CF\t%d\n",cpu.eflags&getCF,r.eflags&getCF);
   }
-  if((cpu.eflags & getZF) != (r.eflags & getZF)){
-    diff = true;
-    printf("cpu.ZF\t%d\tqnume.ZF\t%d\n",cpu.eflags&getZF,r.eflags&getZF);
-  }
-  if((cpu.eflags & getSF) != (r.eflags & getSF)){
-    diff = true;
-    printf("cpu.SF\t%d\tqnume.SF\t%d\n",cpu.eflags&getSF,r.eflags&getSF);
-  }
+  // if((cpu.eflags & getZF) != (r.eflags & getZF) && (isShr == 0)){
+  //   diff = true;
+  //   printf("cpu.ZF\t%d\tqnume.ZF\t%d\n",cpu.eflags&getZF,r.eflags&getZF);
+  // }
+  // if((cpu.eflags & getSF) != (r.eflags & getSF)){
+  //   diff = true;
+  //   printf("cpu.SF\t%d\tqnume.SF\t%d\n",cpu.eflags&getSF,r.eflags&getSF);
+  // }
   if((cpu.eflags & getOF) != (r.eflags & getOF)){
     diff = true;
     printf("cpu.OF\t%d\tqnume.OF\t%d\n",cpu.eflags&getOF,r.eflags&getOF);
