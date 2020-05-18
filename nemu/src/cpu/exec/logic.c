@@ -37,7 +37,7 @@ make_EHelper(xor) {
 }
 
 make_EHelper(or) {
-  rtl_or(&id_dest->val, &id_dest->val, &id_src2->val);
+  rtl_or(&id_dest->val, &id_dest->val, &id_src->val);
   operand_write(id_dest, &id_dest->val);
 
   rtl_update_ZFSF(&id_dest->val, id_dest->width);
