@@ -166,10 +166,10 @@ void difftest_step(uint32_t eip) {
     printf("cpu.edi:\t%#010x\tqnume.edi:\t%#010x\n",cpu.edi,r.edi);
     printf("cpu.eip:\t%#010x\tqnume.eip:\t%#010x\n",cpu.eip,r.eip);
   }
-  if((cpu.eflags & getCF) != (r.eflags & getCF)){
-    diff = true;
-    printf("cpu.CF\t%d\tqnume.CF\t%d\n",cpu.eflags&getCF,r.eflags&getCF);
-  }
+  // if((cpu.eflags & getCF) != (r.eflags & getCF)){
+  //   diff = true;
+  //   printf("cpu.CF\t%d\tqnume.CF\t%d\n",cpu.eflags&getCF,r.eflags&getCF);
+  // }
   // if((cpu.eflags & getZF) != (r.eflags & getZF) && (isShr == 0)){
   //   diff = true;
   //   printf("cpu.ZF\t%d\tqnume.ZF\t%d\n",cpu.eflags&getZF,r.eflags&getZF);
@@ -178,10 +178,10 @@ void difftest_step(uint32_t eip) {
   //   diff = true;
   //   printf("cpu.SF\t%d\tqnume.SF\t%d\n",cpu.eflags&getSF,r.eflags&getSF);
   // }
-  if((cpu.eflags & getOF) != (r.eflags & getOF)){
-    diff = true;
-    printf("cpu.OF\t%d\tqnume.OF\t%d\n",cpu.eflags&getOF,r.eflags&getOF);
-  }
+  // if((cpu.eflags & getOF) != (r.eflags & getOF)){
+  //   diff = true;
+  //   printf("cpu.OF\t%d\tqnume.OF\t%d\n",cpu.eflags&getOF,r.eflags&getOF);
+  // }
   if (diff) {
     nemu_state = NEMU_END;
   }
