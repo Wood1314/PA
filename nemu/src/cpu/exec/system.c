@@ -4,6 +4,8 @@ void diff_test_skip_qemu();
 void diff_test_skip_nemu();
 void exec_wrapper(bool);
 extern void scan_breakpoint();
+uint32_t pio_read(ioaddr_t, int);
+void pio_write(ioaddr_t, int, uint32_t);
 
 make_EHelper(lidt) {
   TODO();
@@ -50,8 +52,8 @@ uint32_t pio_read(ioaddr_t, int);
 void pio_write(ioaddr_t, int, uint32_t);
 
 make_EHelper(in) {
-  TODO();
-
+  t0 = pio_read(id_src->val,id_dest->width);
+  rtl_sr(id_dest->reg, id_dest->width, &t0);
   print_asm_template2(in);
 
 #ifdef DIFF_TEST
@@ -60,7 +62,8 @@ make_EHelper(in) {
 }
 
 make_EHelper(out) {
-  TODO();
+  rtl_lr(&t0, id_src->reg, id_src->width);
+  pio_write(id_dest->val, id_dest->width,t0);
 
   print_asm_template2(out);
 
