@@ -39,3 +39,4 @@ make_EHelper(sbb);
 make_EHelper(leave);
 make_EHelper(jmp_rm);
 make_EHelper(div);
+make_EHelper(adc);
