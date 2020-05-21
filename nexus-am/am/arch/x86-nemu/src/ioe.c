@@ -4,12 +4,14 @@
 #define RTC_PORT 0x48   // Note that this is not standard
 static unsigned long boot_time;
 
+uint32_t pio_read(unsigned int, int);
+
 void _ioe_init() {
   boot_time = inl(RTC_PORT);
 }
 
 unsigned long _uptime() {
-  return 0;
+  return inl(RTC_PORT) - boot_time;
 }
 
 uint32_t* const fb = (uint32_t *)0x40000;
