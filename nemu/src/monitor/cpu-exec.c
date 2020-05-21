@@ -28,10 +28,11 @@ void cpu_exec(uint64_t n) {
   for (; n > 0; n --) {
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
-    uint32_t eip_now = cpu.eip;
+    
 
     exec_wrapper(print_flag);
 #ifdef DEBUG
+    uint32_t eip_now = cpu.eip;
     /* TODO: check watchpoints here. */
     WP* change = scan_watchpoint();
     if(change != NULL){
