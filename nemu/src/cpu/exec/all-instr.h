@@ -31,3 +31,4 @@ make_EHelper(inc);
 make_EHelper(jmp);
 make_EHelper(imul2);
 make_EHelper(cwtl);
+make_EHelper(idiv);
