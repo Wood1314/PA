@@ -102,7 +102,7 @@ static inline void rtl_lr(rtlreg_t* dest, int r, int width) {
   }
 } 
 
-void rtl_sr(int r, int width, const rtlreg_t* src1) {
+static inline void rtl_sr(int r, int width, const rtlreg_t* src1) {
   switch (width) {
     case 4: rtl_sr_l(r, src1); return;
     case 1: rtl_sr_b(r, src1); return;
