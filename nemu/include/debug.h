@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+volatile static int aasd;
 
 #ifdef DEBUG
 extern FILE* log_fp;
