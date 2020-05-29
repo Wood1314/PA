@@ -5,7 +5,7 @@
 #define I8042_DATA_PORT 0x60
 #define I8042_STATUS_PORT 0x64
 static unsigned long boot_time;
-static int aasd;
+volatile static int aasd;
 
 uint32_t pio_read(unsigned int, int);
 
