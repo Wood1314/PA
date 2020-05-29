@@ -1,5 +1,5 @@
 #include "cpu/exec.h"
-
+volatile static int aasd;
 make_EHelper(mov);
 
 make_EHelper(operand_size);
