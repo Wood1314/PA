@@ -48,6 +48,11 @@ typedef struct {
           unsigned :20;
         };
   };
+  struct{
+    uint16_t IDT_LIMIT;
+    uint32_t IDT_BASE;
+  }IDTR; 
+  rtlreg_t CS;
 } CPU_state;
 
 extern CPU_state cpu;

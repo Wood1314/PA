@@ -6,10 +6,19 @@ void exec_wrapper(bool);
 extern void scan_breakpoint();
 uint32_t pio_read(ioaddr_t, int);
 void pio_write(ioaddr_t, int, uint32_t);
+extern void raise_intr(uint8_t , vaddr_t );
 
 make_EHelper(lidt) {
-  TODO();
-
+  rtl_mv(&t0, &id_dest->addr);
+  cpu.IDTR.IDT_LIMIT = vaddr_read(id_dest->addr,2);
+  rtl_addi(&t0, &t0,2);
+  if(decoding.is_operand_size_16){
+    rtl_lm(&cpu.IDTR.IDT_BASE, &t0, 4);
+    rtl_andi(&cpu.IDTR.IDT_BASE, &cpu.IDTR.IDT_BASE, 0x00ffffff);
+  }
+  else{
+    rtl_lm(&cpu.IDTR.IDT_BASE, &t0, 4);
+  }
   print_asm_template1(lidt);
 }
 
@@ -30,12 +39,13 @@ make_EHelper(mov_cr2r) {
 }
 
 make_EHelper(int) {
-  //change the op and stop the program
-  decoding.seq_eip = cpu.eip;
-  scan_breakpoint();
-  exec_wrapper(1);
-  nemu_state = NEMU_STOP;
- // print_asm("int %s", id_dest->str);
+  // //change the op and stop the program
+  // decoding.seq_eip = cpu.eip;
+  // scan_breakpoint();
+  // exec_wrapper(1);
+  // nemu_state = NEMU_STOP;
+  raise_intr(id_dest->val, decoding.seq_eip);
+  print_asm("int %s", id_dest->str);
   
 #ifdef DIFF_TEST
   diff_test_skip_nemu();
