@@ -45,7 +45,7 @@ _RegSet* do_syscall(_RegSet *r) {
   a[3] = SYSCALL_ARG4(r);
 
   uintptr_t ret = -1;
-
+  
   switch (a[0]) {
     case SYS_none: ret = 1; break;
     case SYS_write: ret = sys_write(a[1], a[2], a[3]); break;
