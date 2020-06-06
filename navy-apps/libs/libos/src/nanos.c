@@ -32,6 +32,7 @@ int _write(int fd, void *buf, size_t count){
 
 void *_sbrk(intptr_t increment){
   intptr_t pre_pb = program_break;
+  assert(0);
   if(_syscall_(SYS_brk, pre_pb + increment, 0, 0) == 0 ){
     program_break += increment;
     return (void *)pre_pb;
