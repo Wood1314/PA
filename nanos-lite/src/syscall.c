@@ -35,6 +35,7 @@ static inline uintptr_t sys_close(uintptr_t fd) {
 }
 
 static inline uintptr_t sys_brk(uintptr_t new_brk) {
+  Log("1111");
   return mm_brk(new_brk);
 }
 
