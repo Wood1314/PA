@@ -37,7 +37,6 @@ void *_sbrk(intptr_t increment){
     return (void *)pre_pb;
   }
   else{
-    assert(0);
     return (void*)-1;
   }
 }
