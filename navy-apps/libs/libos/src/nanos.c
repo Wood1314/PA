@@ -27,12 +27,12 @@ int _open(const char *path, int flags, mode_t mode) {
 }
 
 int _write(int fd, void *buf, size_t count){
+  Log("1111");
   return _syscall_(SYS_write, fd, (uintptr_t)buf, count);
 }
 
 void *_sbrk(intptr_t increment){
   intptr_t pre_pb = program_break;
-  Log("1111");
   if(_syscall_(SYS_brk, pre_pb + increment, 0, 0) == 0 ){
     program_break += increment;
     return (void *)pre_pb;
