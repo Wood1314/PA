@@ -2,7 +2,6 @@
 #include "syscall.h"
 #include "fs.h"
 
-extern char end;
 extern ssize_t fs_read(int fd, void *buf, size_t len);
 extern ssize_t fs_write(int fd, const void *buf, size_t len);
 extern int fs_open(const char *pathname, int flags, int mode);
