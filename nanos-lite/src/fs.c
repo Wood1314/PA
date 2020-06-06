@@ -71,7 +71,6 @@ ssize_t fs_read(int fd, void *buf, size_t len) {
 }
 
 ssize_t fs_write(int fd, const void *buf, size_t len) {
-  Log("1111");
   Finfo *f = file_table + fd;
   int remain_bytes = f->size - f->open_offset;
   int bytes_to_write = (remain_bytes > len ? len : remain_bytes);
