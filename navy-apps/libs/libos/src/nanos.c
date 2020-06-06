@@ -37,6 +37,7 @@ void *_sbrk(intptr_t increment){
     return (void *)pre_pb;
   }
   else{
+    Log('bad');
     return (void*)-1;
   }
 }
