@@ -17,6 +17,7 @@ static inline uintptr_t sys_open(uintptr_t pathname, uintptr_t flags, uintptr_t 
 }
 
 static inline uintptr_t sys_write(uintptr_t fd, uintptr_t buf, uintptr_t len) {
+  Log("1111");
   return fs_write(fd, (void*)buf, len);
 }
 
@@ -35,7 +36,6 @@ static inline uintptr_t sys_close(uintptr_t fd) {
 }
 
 static inline uintptr_t sys_brk(uintptr_t new_brk) {
-  Log("1111");
   return mm_brk(new_brk);
 }
 
