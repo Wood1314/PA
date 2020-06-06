@@ -8,8 +8,8 @@
 
 // TODO: discuss with syscall interface
 #ifndef __ISA_NATIVE__
-extern char _end;
-intptr_t program_break = (intptr_t)&_end;
+extern char end;
+intptr_t program_break = (intptr_t)&end;
 // FIXME: this is temporary
 
 int _syscall_(int type, uintptr_t a0, uintptr_t a1, uintptr_t a2){
