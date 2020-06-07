@@ -8,8 +8,8 @@
 
 // TODO: discuss with syscall interface
 #ifndef __ISA_NATIVE__
-extern char _end[0x10000];
-intptr_t program_break = (intptr_t)_end;
+extern char _end;
+intptr_t program_break = (intptr_t)&_end;
 // FIXME: this is temporary
 
 int _syscall_(int type, uintptr_t a0, uintptr_t a1, uintptr_t a2){
@@ -30,32 +30,15 @@ int _write(int fd, void *buf, size_t count){
   return _syscall_(SYS_write, fd, (uintptr_t)buf, count);
 }
 
-// void *_sbrk(intptr_t increment){
-//   static int _end = 0;
-//   if( _end == 0) {
-//     _end = &end;
-//   }
-//   char *new_end = _end + increment;
-//   char tmp[100];
-//   sprintf(tmp, "brk:%p, incre:%p, new_end:%p, new_new_end:%p\n", _end, increment, new_end, (uintptr_t)new_end);
-//   _write(1, tmp, 100);
-//   int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
-//   if(ret == 0){
-//     char temp2[100];
-//     void *old_end = _end;
-//     _end = new_end;
-//     sprintf(temp2, "Success! and update end:%p\n", _end);
-//     _write(1, temp2, 100);
-//     return (void *)old_end;
-//   }        
-//   else{
-//     return (void*)-1;
-//   }
-// }
 void *_sbrk(intptr_t increment){
   intptr_t pre_pb = program_break;
+  char tmp[100];
+  sprintf("program_break:%p, increment:%p, new_break:%p\n",pre_pb, increment, pre_pb + increment);
+  _write(1,tmp, 100);
   if (_syscall_(SYS_brk, pre_pb + increment, 0, 0) == 0) {
     program_break += increment; 
+    char temp2[100];
+    sprintf("Success! and new:%p\n", program_break);
     return (void *)pre_pb;
   }
   else {
