@@ -34,7 +34,7 @@ void *_sbrk(intptr_t increment){
   if( _end == 0) {
     _end = &end;
   }
-  char *new_end = _end + increment;
+  char *new_end = _end;
   // char tmp[100];
   // sprintf(tmp, "brk:%p, incre:%p\n", new_end, increment);
   // _write(1, tmp, 40);
