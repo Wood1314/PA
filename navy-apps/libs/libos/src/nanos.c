@@ -8,8 +8,8 @@
 
 // TODO: discuss with syscall interface
 #ifndef __ISA_NATIVE__
-extern char _end;
-intptr_t program_break = (intptr_t)&_end;
+extern char _end[0x10000];
+intptr_t program_break = (intptr_t)_end;
 // FIXME: this is temporary
 
 int _syscall_(int type, uintptr_t a0, uintptr_t a1, uintptr_t a2){
@@ -54,10 +54,8 @@ int _write(int fd, void *buf, size_t count){
 // }
 void *_sbrk(intptr_t increment){
   intptr_t pre_pb = program_break;
-  if (_syscall_(SYS_brk, pre_pb, 0, 0) == 0) {
-    assert(0);
+  if (_syscall_(SYS_brk, pre_pb + increment, 0, 0) == 0) {
     program_break += increment; 
-    assert(1);
     return (void *)pre_pb;
   }
   else {
