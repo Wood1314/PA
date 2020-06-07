@@ -74,8 +74,8 @@ make_EHelper(in) {
 }
 
 make_EHelper(out) {
-  rtl_lr(&t0, id_src->reg, id_src->width);
-  pio_write(id_dest->val, id_dest->width,t0);
+  //rtl_lr(&t0, id_src->reg, id_src->width);
+  pio_write(id_dest->val, id_src->width,id_src->val);
 
   print_asm_template2(out);
 
