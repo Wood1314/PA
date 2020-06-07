@@ -8,7 +8,7 @@
 
 // TODO: discuss with syscall interface
 #ifndef __ISA_NATIVE__
-extern char end;
+extern int end;
 // FIXME: this is temporary
 
 int _syscall_(int type, uintptr_t a0, uintptr_t a1, uintptr_t a2){
@@ -29,21 +29,22 @@ int _write(int fd, void *buf, size_t count){
   return _syscall_(SYS_write, fd, (uintptr_t)buf, count);
 }
 
-void *_sbrk(intptr_t increment){
-  static char *_end = NULL;
-  if( _end == NULL) {
-    _end = &end;
-  }
-  char *new_end = _end + increment;
-  int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
-  if(ret == 0){
-    void *old_end = _end;
-    _end = new_end;
-    return (void *)old_end;
-  }        
-  else{
-    return (void*)-1;
-  }
+void *_sbrk(intptr_t increment) {
+    static int programBrk = 0;
+    if(programBrk == 0){
+        programBrk = &end;
+    }
+    int ret = programBrk;
+    /*
+    char tmp[100];
+    sprintf(tmp, "brk:%d, incre:%d\n", programBrk, increment);
+    _write(1, tmp, 100);
+    */
+    if(!_syscall_(SYS_brk, programBrk + increment, 0, 0)){
+        programBrk += increment;
+        return (void *)ret;
+    }
+    return (void *)-1;
 }
 
 int _read(int fd, void *buf, size_t count) {
