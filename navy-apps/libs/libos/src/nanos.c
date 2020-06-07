@@ -35,7 +35,7 @@ void *_sbrk(intptr_t increment){
     _end = &end;
   }
   //char *new_end = _end + increment;
-  int new_end = _end;
+  int new_end = (int)increment;
   int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
   if(ret == 0){
     void *old_end = _end;
