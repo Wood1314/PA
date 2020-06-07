@@ -22,7 +22,7 @@ int mm_brk(uint32_t new_brk) {
   }
   else {
     if (new_brk > current->max_brk) {
-      Log("current is %d\n", current->cur_brk);
+      Log("current is %d\n", current->max_brk);
       uintptr_t page_start = PGROUNDUP(current->max_brk);
       Log("page_start: %d\n", page_start);
       uintptr_t page_end = PGROUNDUP(new_brk);
