@@ -16,7 +16,6 @@ static inline uintptr_t sys_open(uintptr_t pathname, uintptr_t flags, uintptr_t 
 }
 
 static inline uintptr_t sys_write(uintptr_t fd, uintptr_t buf, uintptr_t len) {
-  Log("aaaaa");
   return fs_write(fd, (void*)buf, len);
 }
 
@@ -46,7 +45,7 @@ _RegSet* do_syscall(_RegSet *r) {
   a[3] = SYSCALL_ARG4(r);
 
   uintptr_t ret = -1;
-  
+  Log("a[0]:%p, a[1]:%p, a[2]:%p, a[3]:%p\n", a[0], a[1], a[2], a[3]);
   switch (a[0]) {
     case SYS_none: ret = 1; break;
     case SYS_write: ret = sys_write(a[1], a[2], a[3]); break;
