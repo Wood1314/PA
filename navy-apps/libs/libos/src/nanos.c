@@ -41,10 +41,10 @@ void *_sbrk(intptr_t increment){
   int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
   if(ret == 0){
     char temp2[100];
-    sprintf(temp2, "Success!\n");
     _write(1, temp2, 100);
     void *old_end = _end;
     _end = new_end;
+    sprintf(temp2, "Success! and update end:%p\n", _end);
     return (void *)old_end;
   }        
   else{
