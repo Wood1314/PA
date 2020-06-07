@@ -43,6 +43,7 @@ int mm_brk(uint32_t new_brk) {
   }
   else {
     if (new_brk > current->max_brk) {
+      Log("Success!\n");
       // TODO: map memory region [current->max_brk, new_brk)
       // into address space current->as
       if (new_brk & (PGSIZE - 1))
