@@ -34,12 +34,12 @@ void *_sbrk(intptr_t increment){
   intptr_t pre_pb = program_break;
   char tmp[100];
   sprintf(tmp,"program_break:%p, increment:%p, new_break:%p\n",pre_pb, increment, pre_pb + increment);
-  _write(1,tmp, 60);
+  _write(1,tmp, 100);
   if (_syscall_(SYS_brk, pre_pb + increment, 0, 0) == 0) {
     program_break += increment; 
     char temp2[100];
     sprintf(temp2,"Success! and new:%p\n", program_break);
-    _write(1, temp2, 60);
+    _write(1, temp2, 100);
     return (void *)pre_pb;
   }
   else {
