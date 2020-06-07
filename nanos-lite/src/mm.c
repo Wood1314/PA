@@ -30,6 +30,7 @@ int mm_brk(uint32_t new_brk) {
       for (; page_start <= page_end; page_start += PGSIZE) {
         _map(&current->as, (void *)page_start, new_page());
       }
+      Log("Success!\n");
       current->max_brk = new_brk;
     }
     current->cur_brk = new_brk;
