@@ -49,9 +49,9 @@ int mm_brk(uint32_t new_brk) {
         new_brk = (new_brk & ~(PGSIZE - 1)) + PGSIZE;
       if (current->cur_brk & (PGSIZE - 1))
         current->cur_brk = (current->cur_brk & ~(PGSIZE - 1)) + PGSIZE;
+      Log("cur->brk %d, new->brk %d", current->cur_brk, new_brk);
       for (; current->cur_brk < new_brk; current->cur_brk += PGSIZE){
         _map(&current->as, (void *)current->cur_brk, new_page());
-        Log("I Win!");
       }
       current->max_brk = new_brk;
     }
