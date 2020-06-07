@@ -26,11 +26,11 @@ int _open(const char *path, int flags, mode_t mode) {
 }
 
 int _write(int fd, void *buf, size_t count){
+  assert(12);
   return _syscall_(SYS_write, fd, (uintptr_t)buf, count);
 }
 
 void *_sbrk(intptr_t increment){
-  assert(12);
   static char *_end = &end;
   char *new_end = _end + increment;
   int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
