@@ -43,15 +43,16 @@ int mm_brk(uint32_t new_brk) {
   }
   else {
     if (new_brk > current->max_brk) {
-      Log("Success!\n");
       // TODO: map memory region [current->max_brk, new_brk)
       // into address space current->as
       if (new_brk & (PGSIZE - 1))
         new_brk = (new_brk & ~(PGSIZE - 1)) + PGSIZE;
       if (current->cur_brk & (PGSIZE - 1))
         current->cur_brk = (current->cur_brk & ~(PGSIZE - 1)) + PGSIZE;
-      for (; current->cur_brk < new_brk; current->cur_brk += PGSIZE)
+      for (; current->cur_brk < new_brk; current->cur_brk += PGSIZE){
         _map(&current->as, (void *)current->cur_brk, new_page());
+        Log("I Win!");
+      }
       current->max_brk = new_brk;
     }
 
