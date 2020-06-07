@@ -24,7 +24,9 @@ int mm_brk(uint32_t new_brk) {
     if (new_brk > current->max_brk) {
       Log("current is %d\n", current->cur_brk);
       uintptr_t page_start = PGROUNDUP(current->max_brk);
+      Log("page_start: %d\n", page_start);
       uintptr_t page_end = PGROUNDUP(new_brk);
+      Log("page_end: %d\n", page_end);
       for (; page_start <= page_end; page_start += PGSIZE) {
         _map(&current->as, (void *)page_start, new_page());
       }
