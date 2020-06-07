@@ -30,12 +30,12 @@ int _write(int fd, void *buf, size_t count){
 }
 
 void *_sbrk(intptr_t increment){
-  static char *_end = NULL;
-  if( _end == NULL) {
+  static int _end = 0;
+  if( _end == 0) {
     _end = &end;
   }
   //char *new_end = _end + increment;
-  int new_end = 0x100;
+  int new_end = 0x100 + increment;
   int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
   if(ret == 0){
     void *old_end = _end;
