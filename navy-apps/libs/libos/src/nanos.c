@@ -34,8 +34,10 @@ void *_sbrk(intptr_t increment){
   if( _end == 0) {
     _end = &end;
   }
-  //char *new_end = _end + increment;
-  int new_end = (unsigned int)increment;
+  char *new_end = _end + increment;
+  char tmp[100];
+  sprintf(tmp, "brk:%p, incre:%p\n", new_end, increment);
+  _write(1, tmp, 100);
   int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
   if(ret == 0){
     void *old_end = _end;
