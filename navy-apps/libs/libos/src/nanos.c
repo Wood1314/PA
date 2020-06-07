@@ -36,7 +36,7 @@ void *_sbrk(intptr_t increment){
   }
   char *new_end = _end + increment;
   char tmp[100];
-  sprintf(tmp, "brk:%p, incre:%p, new_end:%p\n", _end, increment, new_end);
+  sprintf(tmp, "brk:%p, incre:%p, new_end:%p, new_new_end:%p\n", _end, increment, new_end, (uintptr_t)new_end);
   _write(1, tmp, 100);
   int ret = _syscall_(SYS_brk,(uintptr_t)new_end, 0, 0);
   if(ret == 0){
