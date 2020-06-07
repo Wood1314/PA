@@ -45,7 +45,7 @@ _RegSet* do_syscall(_RegSet *r) {
   a[3] = SYSCALL_ARG4(r);
 
   uintptr_t ret = -1;
-  printf("a[0]:%p, a[1]:%p, a[2]:%p, a[3]:%p\n", a[0], a[1], a[2], a[3]);
+  printf("\n a[0]:%p, a[1]:%p, a[2]:%p, a[3]:%p\n", a[0], a[1], a[2], a[3]);
   switch (a[0]) {
     case SYS_none: ret = 1; break;
     case SYS_write: ret = sys_write(a[1], a[2], a[3]); break;
