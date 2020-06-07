@@ -9,18 +9,16 @@ void pio_write(ioaddr_t, int, uint32_t);
 extern void raise_intr(uint8_t , vaddr_t );
 
 make_EHelper(lidt) {
-  // TODO();
-  // 在 IDTR 中设置好 IDT 的长度
-  cpu.IDTR.IDT_LIMIT = vaddr_read(id_dest->addr, 2);
-
-  // 判断操作数size，若为16位，则取(&data[1])起低24位，否则取32位
-  if (decoding.is_operand_size_16) {
-    cpu.IDTR.IDT_BASE = vaddr_read(id_dest->addr + 2, 4) & 0x00ffffff;
+  rtl_mv(&t0, &id_dest->addr);
+  cpu.IDTR.IDT_LIMIT = vaddr_read(id_dest->addr,2);
+  rtl_addi(&t0, &t0,2);
+  if(decoding.is_operand_size_16){
+    rtl_lm(&cpu.IDTR.IDT_BASE, &t0, 4);
+    rtl_andi(&cpu.IDTR.IDT_BASE, &cpu.IDTR.IDT_BASE, 0x00ffffff);
   }
-  else {
-    cpu.IDTR.IDT_BASE = vaddr_read(id_dest->addr + 2, 4); 
+  else{
+    rtl_lm(&cpu.IDTR.IDT_BASE, &t0, 4);
   }
-
   print_asm_template1(lidt);
 }
 
@@ -76,8 +74,8 @@ make_EHelper(in) {
 }
 
 make_EHelper(out) {
-  //rtl_lr(&t0, id_src->reg, id_src->width);
-  pio_write(id_dest->val, id_src->width,id_src->val);
+  rtl_lr(&t0, id_src->reg, id_src->width);
+  pio_write(id_dest->val, id_dest->width,t0);
 
   print_asm_template2(out);
 
