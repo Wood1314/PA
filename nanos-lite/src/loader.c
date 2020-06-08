@@ -10,9 +10,9 @@ extern int fs_open(const char *pathname, int flags, int mode);
 extern int fs_close(int fd);
 
 uintptr_t loader(_Protect *as, const char *filename) {
-  //ramdisk_read(DEFAULT_ENTRY, 0, get_ramdisk_size());
-  int fd = fs_open("/bin/text", 0, 0);
-  fs_read(fd, DEFAULT_ENTRY, fs_filesz(fd)); 
-  fs_close(fd); 
+  ramdisk_read(DEFAULT_ENTRY, 0, get_ramdisk_size());
+  // int fd = fs_open("/bin/text", 0, 0);
+  // fs_read(fd, DEFAULT_ENTRY, fs_filesz(fd)); 
+  // fs_close(fd); 
   return (uintptr_t)DEFAULT_ENTRY;
 }
