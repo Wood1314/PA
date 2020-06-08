@@ -11,9 +11,11 @@ extern int fs_close(int fd);
 
 uintptr_t loader(_Protect *as, const char *filename) {
   //ramdisk_read(DEFAULT_ENTRY, 0, get_ramdisk_size());
-  int fd = fs_open("/bin/text", 0, 0);
-  Log("filename is %s",filename);
+  int fd = fs_open(filename, 0, 0);
+  Log("filename is ");
   fs_read(fd, DEFAULT_ENTRY, fs_filesz(fd)); 
+  Log("filename is ");
   fs_close(fd); 
+  Log("filename is ");
   return (uintptr_t)DEFAULT_ENTRY;
 }
