@@ -126,7 +126,7 @@ opcode_entry opcode_table [512] = {
   /* 0xcc */	EX(int), IDEXW(I,int,1), EMPTY, EX(iret),
   /* 0xd0 */	IDEXW(gp2_1_E, gp2, 1), IDEX(gp2_1_E, gp2), IDEXW(gp2_cl2E, gp2, 1), IDEX(gp2_cl2E, gp2),
   /* 0xd4 */	EMPTY, EMPTY, EX(nemu_trap), EMPTY,
-  /* 0xd8 */	EMPTY, EMPTY, EMPTY, IDEX(gp2_cl2E, gp2),
+  /* 0xd8 */	EMPTY, EMPTY, EMPTY, EX(nop),
   /* 0xdc */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe4 */	IDEXW(in_I2a, in, 1), IDEX(in_I2a, in), IDEXW(out_a2I, out, 1), IDEX(out_a2I, out), 
