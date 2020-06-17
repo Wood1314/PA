@@ -97,7 +97,7 @@ paddr_t page_translate(vaddr_t vaddr, bool is_write) {
         paddr_write(pde, 4, pde_obj.val);
     }
 
-    if (!pte_obj.accessed || ( pte_obj.dirty == 0 && is_write)) {
+    if (!pte_obj.accessed || ( !pte_obj.dirty == 0 && is_write)) {
         pte_obj.accessed = 1;
         pte_obj.dirty = 1;
         paddr_write(pte, 4, pte_obj.val);
