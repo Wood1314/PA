@@ -70,40 +70,54 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
 }
 
 paddr_t page_translate(vaddr_t vaddr, bool is_write) {
-    if(cpu.cr0.paging == 0)
-      return vaddr;
-    uint32_t pde_index = (vaddr >> 22) & 0x3ff;
-    uint32_t pte_index = (vaddr >> 12) & 0x3ff;
-    uint32_t off = vaddr &0xfff;
+  // 若没有开启分页机制，直接返回
+  if (cpu.cr0.paging == 0)
+    return vaddr;
 
-    //find pde
-    uint32_t pde_base = cpu.cr3.page_directory_base;
-    uint32_t pde = (pde_base << 12) + (pde_index << 2);
-    PDE pde_obj;
-    pde_obj.val = paddr_read(pde, 4);
-    Log("pde is 0x%x,  pde val is: 0x%x", pde, pde_obj.val);
-    assert(pde_obj.present);
+  // Log("vaddr is: 0x%x", vaddr);
+  // Log("CR3 page_directory_base is: 0x%x", cpu.cr3.page_directory_base);
 
-    //find pte
-    uint32_t pte = (pde_obj.val & 0xfffff000 ) + (pte_index << 2);
-    PTE pte_obj;
-    pte_obj.val = paddr_read(pte, 4);
-    Log("pte is 0x%x,  pte val is: 0x%x", pte, pte_obj.val);
-    assert(pte_obj.present);
+  // 获取页目录索引，页表索引，页内偏移
+  uint32_t pde_index = (vaddr>>22)&0x3ff;
+  uint32_t pte_index = (vaddr>>12)&0x3ff;
+  uint32_t off = vaddr & 0xfff;
+  // Log("页目录索引 is: 0x%x", pde_index);
+  // Log("页表索引 is: 0x%x", pte_index);
+  // Log("页内偏移 is: 0x%x", off);
 
 
-    if (!pde_obj.accessed) {
-        pde_obj.accessed = 1;
-        paddr_write(pde, 4, pde_obj.val);
-    }
+  // 查页目录,获取页表基址
+  uint32_t pde_base = cpu.cr3.page_directory_base;
+  uint32_t pde = (pde_base<<12) + (pde_index<<2);
+  PDE pde_obj;
+  pde_obj.val = paddr_read(pde, 4);
+  assert(pde_obj.present);
+  // Log("pde is 0x%x,  pde val is: 0x%x", pde, pde_obj.val);
 
-    if (!pte_obj.accessed || ( !pte_obj.dirty == 0 && is_write)) {
-        pte_obj.accessed = 1;
-        pte_obj.dirty = 1;
-        paddr_write(pte, 4, pte_obj.val);
-    }
+  // 查页表，获取页框号
+  uint32_t pte = (pde_obj.val & 0xfffff000) + (pte_index<<2);
+  PTE pte_obj;
+  pte_obj.val = paddr_read(pte, 4);
+  // Log("pte is 0x%x,  pte val is: 0x%x", pte, pte_obj.val);
+  assert(pte_obj.present);
 
-    uint32_t paddr = (pte_obj.val & 0xfffff000) | off;
-    Log("paddr is: 0x%x", paddr);
-    return paddr;
+
+  // 检验 PDE 的 accessed 位
+  if (!pde_obj.accessed) {
+    pde_obj.accessed = 1;
+    paddr_write(pde, 4, pde_obj.val);
+  }
+
+  // // 检验 PTE 的 accessed 位
+  if (!pte_obj.accessed || (!pte_obj.dirty == 0 && is_write)) {
+    pte_obj.accessed = 1;
+    pte_obj.dirty = 1;
+    paddr_write(pte, 4, pte_obj.val);
+  }
+
+  uint32_t paddr = (pte_obj.val & 0xfffff000) | off;
+  // Log("paddr is: 0x%x", paddr);
+
+  return paddr;
+
 }
