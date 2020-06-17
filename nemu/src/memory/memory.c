@@ -81,14 +81,14 @@ paddr_t page_translate(vaddr_t vaddr, bool is_write) {
     uint32_t pde = (pde_base << 12) + (pde_index << 2);
     PDE pde_obj;
     pde_obj.val = paddr_read(pde, 4);
-    Log("ped is 0x%x", pde_obj.val);
+    //Log("pde is 0x%x,  pde val is: 0x%x", pde, pde_obj.val);
     assert(pde_obj.present);
 
     //find pte
     uint32_t pte = (pde_obj.val & 0xfffff000 ) + (pte_index << 2);
     PTE pte_obj;
     pte_obj.val = paddr_read(pte, 4);
-    Log("pte is 0x%x", pte_obj.val);
+    //Log("pte is 0x%x", pte_obj.val);
     assert(pte_obj.present);
 
 
@@ -103,6 +103,6 @@ paddr_t page_translate(vaddr_t vaddr, bool is_write) {
     }
 
     uint32_t paddr = (pte_obj.val & 0xfffff000) | off;
-    Log("paddr is 0x%x", paddr);
+    //Log("paddr is 0x%x", paddr);
     return paddr;
 }
