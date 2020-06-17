@@ -20,6 +20,7 @@ uintptr_t loader(_Protect *as, const char *filename) {
   void *va = DEFAULT_ENTRY;
 
   while (file_size > 0) {
+    Log("hello");
     pa = new_page();
     Log("Map va to pa: 0x%08x to 0x%08x", va, pa);
     _map(as, va, pa);
