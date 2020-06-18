@@ -41,7 +41,19 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
   if(cpu.cr0.paging) {
       bool overflow_page = (addr >> 12) != ( (addr  + len -1) >> 12 );
       if (overflow_page) {
-        assert(0);
+        //first page
+        uint32_t page1_size = 0x1000 - (addr & 0xfff);
+        paddr_t page1_paddr = page_translate(addr,false);
+
+        //second page
+        uint32_t page2 = addr + page1_size;
+        paddr_t page2_paddr = page_translate(page2, false);
+
+        //read
+        uint32_t pre_data = paddr_read(page1_paddr, page1_size);
+        uint32_t nxt_data = paddr_read(page2_paddr, len - page1_size);
+
+        return pre_data | (nxt_data << ( page1_size * 8 ) );
       }
       else {
          paddr_t paddr = page_translate(addr, false);
@@ -56,7 +68,18 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
   if(cpu.cr0.paging) {
       bool overflow_page = (addr >> 12) != ( (addr + len -1) >> 12 );
       if (overflow_page) {
-        assert(0);
+        //first page
+        uint32_t page1_size = 0x1000 - (addr & 0xfff);
+        paddr_t page1_paddr = page_translate(addr,true);
+
+        //second page
+        uint32_t page2 = addr + page1_size;
+        paddr_t page2_paddr = page_translate(page2, true);
+
+        //write
+        uint32_t nxt_data = data >> (32 - page1_size * 8);
+        paddr_write(page1_paddr, page1_size, data);
+        paddr_write(page2_paddr, len-page1_size, nxt_data);
       }
       else {
           paddr_t paddr = page_translate(addr, true);
