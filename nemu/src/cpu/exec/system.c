@@ -52,7 +52,7 @@ make_EHelper(int) {
   // scan_breakpoint();
   // exec_wrapper(1);
   // nemu_state = NEMU_STOP;
-  Log("event is %x", id_dest->val);
+  //Log("event is %x", id_dest->val);
   raise_intr(id_dest->val, decoding.seq_eip);
   print_asm("int %s", id_dest->str);
   
