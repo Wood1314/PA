@@ -27,5 +27,6 @@ void load_prog(const char *filename) {
 }
 
 _RegSet* schedule(_RegSet *prev) {
+  Log("aaaaaa");
   return NULL;
 }
