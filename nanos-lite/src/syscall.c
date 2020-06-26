@@ -54,5 +54,5 @@ _RegSet* do_syscall(_RegSet *r) {
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
   SYSCALL_ARG1(r) = ret;
-  return NULL;
+  return r;
 }
