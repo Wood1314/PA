@@ -6,7 +6,6 @@ static _RegSet* do_event(_Event e, _RegSet* r) {
   switch (e.event) {
       case _EVENT_SYSCALL: return do_syscall(r); break;
       case _EVENT_TRAP:  return schedule(r); break;
-      case 3: Log("aaa"); break;
     default: panic("Unhandled event ID = %d", e.event);
   }
   return NULL;
