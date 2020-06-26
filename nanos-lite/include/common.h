@@ -8,5 +8,6 @@
 typedef char bool;
 #define true 1
 #define false 0
+_RegSet* schedule(_RegSet *prev);
 
 #endif
