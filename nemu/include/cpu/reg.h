@@ -53,6 +53,7 @@ typedef struct {
     uint16_t IDT_LIMIT;
     uint32_t IDT_BASE;
   }IDTR; 
+  bool INTR;
   rtlreg_t CS;
   CR0 cr0;
   CR3 cr3;

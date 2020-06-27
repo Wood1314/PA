@@ -21,7 +21,7 @@ static inline uintptr_t sys_write(uintptr_t fd, uintptr_t buf, uintptr_t len) {
 static inline uintptr_t sys_read(uintptr_t fd, uintptr_t buf, uintptr_t len) {
   return fs_read(fd, (void *)buf, len);
 }
-
+  
 static inline uintptr_t sys_lseek(uintptr_t fd, uintptr_t offset, uintptr_t whence) {
   return fs_lseek(fd, offset, whence);
 }
